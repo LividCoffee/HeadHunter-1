@@ -1,0 +1,104 @@
+hoard-mode: false
+use-percentage: true
+ignore-worlds: true
+sell:
+  rate: 10.0
+  notify: true
+  broadcast: false
+  console: false
+  sign-only: false
+head:
+  value:
+    use-balance: true
+    use-bounty: true
+    cumulative: false
+    min-worth: 0.0
+  format:
+    title: '&6{TARGET}''s Head'
+    worth: '&eSell Price:&a ${VALUE}'
+    worthless: '&eSell Price: &cWorthless'
+drop:
+  rate: 100
+  only-with-bounty: false
+  fire-tick: false
+  any-cause: false
+  default-cooldown: 0
+  weapon:
+    swords: true
+    bows: true
+    axes: true
+    pickaxes: false
+    spades: false
+    hoes: false
+    rods: false
+    fists: false
+bounty:
+  list-size: -1
+  minimum: 20.0
+  godfather-mode: false
+  notify: true
+  broadcast: true
+  console: false
+sign:
+  selling:
+    '1': '--&4&lSell Heads&r--'
+    '2': 'Sell your'
+    '3': 'heads here!'
+    '4': '---------------'
+  wanted:
+    '1': '----&4&lWanted&r----'
+    '2': '{TARGET}'
+    '3': '${VALUE}'
+    '4': '---------------'
+enchant:
+  looting:
+    enabled: false
+    level-multiplier-map: '1:1.1/2:1.3/3:1.5'
+  custom:
+    enabled: false
+    chance: 10
+    min-levels: 20
+    max-levels: 30
+    max-other-enchantments: 2
+    allowed-bows: true
+    allowed-tools: false
+    drop-rate: -1
+support:
+  factions:
+    drop-wilderness: true
+    drop-warzone: false
+    drop-safezone: false
+  minigames:
+    drop-game: false
+  mobstacker:
+    drop-each: true
+mobhunter:
+  hoard-mode: false
+  drop:
+    any-cause: false
+    prevent-spawn-reasons: ''
+    prevent-death-reasons: ''
+  head:
+    format:
+      title: '&3{TARGET} Head'
+      worth: '&bSell Price:&a ${VALUE}'
+      worthless: '&bSell Price: &cWorthless'
+  enchant:
+    looting:
+      enabled: false
+      level-multiplier-map: '1:1.1/2:1.3/3:1.5'
+    custom:
+      enabled: false
+      drop-rate: -1
+  support:
+    factions:
+      drop-wilderness: true
+      drop-warzone: false
+      drop-safezone: false
+    minigames:
+      drop-game: false
+do-not-change-this-ever: '2.0.0'
+worlds:
+- world
+- world_nether
+- world_the_end

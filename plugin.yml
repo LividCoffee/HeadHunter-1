@@ -1,0 +1,14 @@
+name: HeadHunter
+version: 2.0.0
+author: Neo
+main: com.neo.headhunter.HeadHunter
+website: https://www.spigotmc.org/resources/headhunter.8088/
+depend: [Vault]
+softdepend: [Factions, MassiveCore, Minigames, MobStacker, StackMob]
+commands:
+    hunter:
+        description: Use '/hunter help' for more.
+    sellhead:
+        description: Shortcut for '/hunter sellhead'.
+    bounty:
+        description: Shortcut for '/hunter bounty'.
