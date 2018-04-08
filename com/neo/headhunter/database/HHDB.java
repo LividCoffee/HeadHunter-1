@@ -16,6 +16,7 @@ public final class HHDB {
 	
 	private BountyRegister bountyRegister;
 	private BlockRegister blockRegister;
+	private HeadRegister headRegister;
 	
 	public HHDB(HeadHunter plugin) {
 		this.plugin = plugin;
@@ -27,6 +28,7 @@ public final class HHDB {
 		
 		this.bountyRegister = new BountyRegister(c);
 		this.blockRegister = new BlockRegister(c);
+		this.headRegister = new HeadRegister(c);
 	}
 	
 	public BountyRegister getBountyRegister() {
@@ -35,6 +37,10 @@ public final class HHDB {
 	
 	public BlockRegister getBlockRegister() {
 		return blockRegister;
+	}
+	
+	public HeadRegister getHeadRegister() {
+		return headRegister;
 	}
 	
 	private Connection getSQLConnection() {

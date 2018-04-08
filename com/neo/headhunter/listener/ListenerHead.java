@@ -1,7 +1,7 @@
 package com.neo.headhunter.listener;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.database.HeadDB;
+import com.neo.headhunter.database.HeadRegister;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,10 +14,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 public final class ListenerHead implements Listener {
-	private HeadDB headDB;
+	private HeadRegister headRegister;
 	
 	public ListenerHead(HeadHunter plugin) {
-		this.headDB = plugin.getHeadDB();
+		this.headRegister = plugin.getHHDB().getHeadRegister();
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -26,7 +26,7 @@ public final class ListenerHead implements Listener {
 			return;
 		ItemStack inHand = event.getItemInHand();
 		if(inHand != null && inHand.getType() == Material.SKULL_ITEM)
-			headDB.placeHead(event.getBlock().getLocation(), inHand);
+			headRegister.placeHead(event.getBlock().getLocation(), inHand);
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -35,9 +35,9 @@ public final class ListenerHead implements Listener {
 			return;
 		Player p = event.getPlayer();
 		Location loc = event.getBlock().getLocation();
-		ItemStack head = headDB.getHead(loc);
+		ItemStack head = headRegister.getHead(loc);
 		if(p.getGameMode() != GameMode.CREATIVE)
 			loc.getWorld().dropItemNaturally(loc, head);
-		headDB.breakHead(loc);
+		headRegister.breakHead(loc);
 	}
 }
