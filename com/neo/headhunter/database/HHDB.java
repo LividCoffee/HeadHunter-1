@@ -15,6 +15,7 @@ public final class HHDB {
 	private Connection c;
 	
 	private BountyRegister bountyRegister;
+	private BlockRegister blockRegister;
 	
 	public HHDB(HeadHunter plugin) {
 		this.plugin = plugin;
@@ -25,10 +26,15 @@ public final class HHDB {
 			throw new IllegalArgumentException("connection is null");
 		
 		this.bountyRegister = new BountyRegister(c);
+		this.blockRegister = new BlockRegister(c);
 	}
 	
 	public BountyRegister getBountyRegister() {
 		return bountyRegister;
+	}
+	
+	public BlockRegister getBlockRegister() {
+		return blockRegister;
 	}
 	
 	private Connection getSQLConnection() {
