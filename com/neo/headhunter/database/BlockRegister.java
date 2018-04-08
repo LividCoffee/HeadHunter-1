@@ -13,11 +13,9 @@ import java.util.UUID;
 public final class BlockRegister {
 	private Connection c;
 	
-	private PreparedStatement placeBlock;
-	private PreparedStatement getBlock;
-	private PreparedStatement breakBlock;
+	private PreparedStatement placeBlock, getBlock, breakBlock;
 	
-	public BlockRegister(Connection c) {
+	BlockRegister(Connection c) {
 		this.c = c;
 		
 		createTables();

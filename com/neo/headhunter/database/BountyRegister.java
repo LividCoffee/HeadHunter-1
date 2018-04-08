@@ -10,13 +10,9 @@ import java.util.UUID;
 public final class BountyRegister {
 	private Connection c;
 	
-	private PreparedStatement getBounty;
-	private PreparedStatement getTotalBounty;
-	private PreparedStatement getGodfather;
+	private PreparedStatement getBounty, getTotalBounty, getGodfather;
 	private PreparedStatement addBounty;
-	private PreparedStatement removeBountyTarget;
-	private PreparedStatement removeBountySingle;
-	private PreparedStatement removeBountyAmount;
+	private PreparedStatement removeBountyTarget, removeBountySingle, removeBountyAmount;
 	private PreparedStatement setBounty;
 	private PreparedStatement getSortedBounties;
 	
