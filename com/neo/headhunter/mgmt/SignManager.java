@@ -1,16 +1,17 @@
 package com.neo.headhunter.mgmt;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.BountyRegister;
 import com.neo.headhunter.factory.RateFactory;
 import com.neo.headhunter.util.HeadUtils;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.item.sign.SellingSign;
-import com.neo.headhunter.util.item.sign.WantedSign;
 import com.neo.headhunter.util.config.Accessor;
 import com.neo.headhunter.util.config.Settings;
 import com.neo.headhunter.util.general.Duplet;
+import com.neo.headhunter.util.general.MappedList;
+import com.neo.headhunter.util.item.sign.SellingSign;
+import com.neo.headhunter.util.item.sign.WantedSign;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Sign;
@@ -19,13 +20,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public final class SignManager extends BukkitRunnable {
 	private HeadHunter plugin;
-	private BountyDB bountyDB;
+	private BountyRegister bountyRegister;
 	private RateFactory rateFactory;
 	
 	private Map<Location, SellingSign> sellingSigns;
@@ -34,7 +34,7 @@ public final class SignManager extends BukkitRunnable {
 	
 	public SignManager(HeadHunter plugin) {
 		this.plugin = plugin;
-		this.bountyDB = plugin.getBountyDB();
+		this.bountyRegister = plugin.getHHDB().getBountyRegister();
 		this.rateFactory = plugin.getRateFactory();
 		
 		this.sellingSigns = new HashMap<>();
@@ -64,30 +64,19 @@ public final class SignManager extends BukkitRunnable {
 	}
 	
 	private void updateWantedSigns() {
-		int minIndex = -1, maxIndex = -1;
-		for(WantedSign sign : wantedSigns.values()) {
-			if(minIndex == -1 || maxIndex == -1) {
-				minIndex = sign.getBountyIndex();
-				maxIndex = sign.getBountyIndex();
-			}
-			else {
-				minIndex = Math.min(minIndex, sign.getBountyIndex());
-				maxIndex = Math.max(maxIndex, sign.getBountyIndex());
-			}
-		}
-		List<Duplet<UUID, Double>> topBounties = bountyDB.getTopBounties(minIndex + 1, maxIndex + 1);
+		MappedList<UUID, Double> sortedBounties = bountyRegister.getSortedBounties();
 		for(Map.Entry<Location, WantedSign> entry : wantedSigns.entrySet()) {
 			Location signLoc = entry.getKey();
 			if (!(signLoc.getBlock().getState() instanceof Sign))
 				return;
 			WantedSign sign = entry.getValue();
-			Duplet<UUID, Double> targetBounty = topBounties.get(sign.getBountyIndex());
-			OfflinePlayer target = PlayerUtils.getPlayer(targetBounty.getT());
+			Duplet<UUID, Double> targetBounty = sortedBounties.get(sign.getBountyIndex());
+			OfflinePlayer target = targetBounty == null ? null : PlayerUtils.getPlayer(targetBounty.getT());
 			String targetName = target == null ? "N/A" : target.getName();
 			for (Player p : signLoc.getWorld().getPlayers()) {
 				if (p.getLocation().distance(signLoc) < 100) {
 					String hunterName = p.getName();
-					double value = targetBounty.getU();
+					double value = targetBounty == null ? 0 : targetBounty.getU();
 					p.sendSignChange(signLoc, new String[] {
 							Utils.f(Settings.getSign_wanted_1(), hunterName, targetName, value, 0),
 							Utils.f(Settings.getSign_wanted_2(), hunterName, targetName, value, 0),
@@ -96,7 +85,7 @@ public final class SignManager extends BukkitRunnable {
 					});
 				}
 			}
-			if(bountyDB.isHeadUpdateRequired())
+			if(bountyRegister.isHeadUpdateRequired())
 				HeadUtils.updateHead(sign.getHeadLocation(), target == null ? null : targetName);
 		}
 	}

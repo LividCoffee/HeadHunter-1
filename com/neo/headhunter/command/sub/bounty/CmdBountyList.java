@@ -1,6 +1,6 @@
 package com.neo.headhunter.command.sub.bounty;
 
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.BountyRegister;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.message.Message;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public final class CmdBountyList {
 	private static final String[] P = {"hunter.admin", "hunter.use", "hunter.list", "hunter.bounty.list"};
 	
-	public static boolean run(Player p, String[] args, BountyDB bountyDB) {
+	public static boolean run(Player p, String[] args, BountyRegister bountyRegister) {
 		if(PlayerUtils.hasAnyPermissions(p, P)) {
 			int pageIndex = 0;
 			switch(args.length) {

@@ -2,7 +2,7 @@ package com.neo.headhunter.listener;
 
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.command.sub.CmdSellhead;
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.BountyRegister;
 import com.neo.headhunter.mgmt.SignManager;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
@@ -26,12 +26,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public final class ListenerSign implements Listener {
 	private Economy economy;
-	private BountyDB bountyDB;
+	private BountyRegister bountyRegister;
 	private SignManager signManager;
 	
 	public ListenerSign(HeadHunter plugin) {
 		this.economy = plugin.getEconomy();
-		this.bountyDB = plugin.getBountyDB();
+		this.bountyRegister = plugin.getHHDB().getBountyRegister();
 		this.signManager = plugin.getSignManager();
 	}
 	
@@ -74,7 +74,7 @@ public final class ListenerSign implements Listener {
 					wantedSign.setHeadLocation(b.getLocation());
 					signManager.saveWantedSigns();
 					p.sendMessage(Control.WANTED_LINKED.success());
-					bountyDB.setHeadUpdateRequired(true);
+					bountyRegister.setHeadUpdateRequired(true);
 				}
 			}
 			signManager.removeSignLink(p);

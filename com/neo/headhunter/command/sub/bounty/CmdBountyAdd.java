@@ -1,6 +1,6 @@
 package com.neo.headhunter.command.sub.bounty;
 
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.BountyRegister;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Settings;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public final class CmdBountyAdd {
 	private static final String[] P = {"hunter.admin", "hunter.use", "hunter.bounty", "hunter.bounty.add"};
 	
-	public static boolean run(Player p, String[] args, Economy economy, BountyDB bountyDB) {
+	public static boolean run(Player p, String[] args, Economy economy, BountyRegister bountyRegister) {
 		if(PlayerUtils.hasAnyPermissions(p, P)) {
 			if(Settings.isHoardMode()) {
 				p.sendMessage(Message.HOARD_MODE.f());
@@ -56,7 +56,7 @@ public final class CmdBountyAdd {
 				return false;
 			}
 			economy.withdrawPlayer(p, amount);
-			bountyDB.addBounty(p, target, amount);
+			bountyRegister.addBounty(p, target, amount);
 			
 			String msg = Message.BOUNTY_ADDED.f(p.getName(), target.getName(), amount, 1);
 			if(Settings.isBounty_notify()) {

@@ -1,8 +1,7 @@
 package com.neo.headhunter;
 
 import com.neo.headhunter.command.MainExecutor;
-import com.neo.headhunter.database.HeadDB;
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.HHDB;
 import com.neo.headhunter.factory.DropFactory;
 import com.neo.headhunter.factory.HeadFactory;
 import com.neo.headhunter.factory.RateFactory;
@@ -29,8 +28,7 @@ import java.io.IOException;
 public class HeadHunter extends JavaPlugin {
 	private Economy economy;
 	
-	private BountyDB bountyDB;
-	private HeadDB headDB;
+	private HHDB hhdb;
 	
 	private ListenerMinigames listenerMinigames;
 	private ListenerCombustion listenerCombustion;
@@ -59,10 +57,8 @@ public class HeadHunter extends JavaPlugin {
 		    return;
 	    }
 	    
-	    //Create databases
-		File dbFile = new File(getDataFolder() + File.separator + Utils.DAT);
-		this.bountyDB = new BountyDB(this, dbFile);
-	    this.headDB = new HeadDB(this, dbFile);
+	    //Create database
+		this.hhdb = new HHDB(this);
 	
 	    //Force default configuration files
 	    access(Utils.MDB).forceDefaultConfig();
@@ -131,12 +127,8 @@ public class HeadHunter extends JavaPlugin {
 		return economy;
 	}
 	
-	public BountyDB getBountyDB() {
-		return bountyDB;
-	}
-	
-	public HeadDB getHeadDB() {
-		return headDB;
+	public HHDB getHHDB() {
+		return hhdb;
 	}
 	
 	public ListenerMinigames getListenerMinigames() {

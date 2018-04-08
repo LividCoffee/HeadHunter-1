@@ -23,7 +23,7 @@ public final class MappedList<K, V extends Comparable<V>> {
 	}
 	
 	public Duplet<K, V> get(int index) {
-		K kRes = index > (order.size() - 1) ? null : order.get(index);
+		K kRes = (index >= 0 && index < order.size()) ? null : order.get(index);
 		V vRes = map.get(kRes);
 		if(kRes == null || vRes == null)
 			return null;

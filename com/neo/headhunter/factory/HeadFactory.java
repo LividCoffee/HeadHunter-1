@@ -1,7 +1,7 @@
 package com.neo.headhunter.factory;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.BountyRegister;
 import com.neo.headhunter.util.HeadUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Settings;
@@ -19,12 +19,12 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.Arrays;
 
 /**
- * Requires: Economy, BountyDB, MobLibrary, RateFactory
+ * Requires: Economy, BountyRegister, MobLibrary, RateFactory
  */
 public final class HeadFactory {
 	private Economy economy;
 	
-	private BountyDB bountyDB;
+	private BountyRegister bountyRegister;
 	
 	private MobLibrary mobLibrary;
 	private RateFactory rateFactory;
@@ -32,7 +32,7 @@ public final class HeadFactory {
 	public HeadFactory(HeadHunter plugin) {
 		this.economy = plugin.getEconomy();
 		
-		this.bountyDB = plugin.getBountyDB();
+		this.bountyRegister = plugin.getHHDB().getBountyRegister();
 		
 		this.mobLibrary = plugin.getMobLibrary();
 		this.rateFactory = plugin.getRateFactory();
@@ -104,8 +104,8 @@ public final class HeadFactory {
 					withdraw = balanceValue;
 				}
 				if (Settings.isHead_value_useBounty()) {
-					bountyValue = bountyDB.getTotalBounty(targetPlayer);
-					godfather = bountyDB.getGodfather(targetPlayer);
+					bountyValue = bountyRegister.getTotalBounty(targetPlayer);
+					godfather = bountyRegister.getGodfather(targetPlayer);
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 package com.neo.headhunter.command.sub.bounty;
 
-import com.neo.headhunter.database.BountyDB;
+import com.neo.headhunter.database.BountyRegister;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Settings;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public final class CmdBountyRemove {
 	private static final String[] P = {"hunter.admin", "hunter.use", "hunter.bounty", "hunter.bounty.remove"};
 	
-	public static boolean run(Player p, String[] args, Economy economy, BountyDB bountyDB) {
+	public static boolean run(Player p, String[] args, Economy economy, BountyRegister bountyRegister) {
 		if(PlayerUtils.hasAnyPermissions(p, P)) {
 			OfflinePlayer target;
 			double amount;
@@ -46,7 +46,7 @@ public final class CmdBountyRemove {
 				p.sendMessage(Message.SELF_TARGET.f());
 				return false;
 			}
-			if(amount > bountyDB.getBounty(p, target)) {
+			if(amount > bountyRegister.getBounty(p, target)) {
 				p.sendMessage(Message.BOUNTY_REMOVE_ERR.f());
 				return false;
 			}
@@ -56,9 +56,9 @@ public final class CmdBountyRemove {
 			}
 			
 			if(amount == -1)
-				amount = bountyDB.removeBounty(p, target);
+				amount = bountyRegister.removeBounty(p, target);
 			else
-				bountyDB.removeBounty(p, target, amount);
+				bountyRegister.removeBounty(p, target, amount);
 			economy.depositPlayer(p, amount);
 			
 			String msg = Message.BOUNTY_REMOVED.f(p.getName(), target.getName(), amount, 1);
