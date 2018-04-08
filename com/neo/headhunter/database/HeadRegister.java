@@ -13,7 +13,7 @@ import java.util.Arrays;
 public final class HeadRegister {
 	private Connection c;
 	
-	private PreparedStatement placeHead, getHead, breakHead;
+	private PreparedStatement placeHead, getHead;
 	
 	HeadRegister(Connection c) {
 		this.c = c;
@@ -57,15 +57,6 @@ public final class HeadRegister {
 		return null;
 	}
 	
-	public void breakHead(Location loc) {
-		try {
-			breakHead.setString(1, Utils.parseLocation(loc));
-			breakHead.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	private void createTables() {
 		try {
 			Statement s = c.createStatement();
@@ -83,7 +74,6 @@ public final class HeadRegister {
 		try {
 			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?, ?)");
 			this.getHead = c.prepareStatement("select * from head where location = ?");
-			this.breakHead = c.prepareStatement("delete from head where location = ?");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
