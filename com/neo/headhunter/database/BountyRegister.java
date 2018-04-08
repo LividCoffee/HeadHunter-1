@@ -18,7 +18,7 @@ public final class BountyRegister {
 	
 	private boolean headUpdateRequired;
 	
-	public BountyRegister(Connection c) {
+	BountyRegister(Connection c) {
 		this.c = c;
 		
 		createTables();
