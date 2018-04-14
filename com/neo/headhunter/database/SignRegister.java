@@ -1,6 +1,7 @@
 package com.neo.headhunter.database;
 
 import com.neo.headhunter.util.Utils;
+import com.neo.headhunter.util.item.sign.SellingSign;
 import com.neo.headhunter.util.item.sign.WantedSign;
 import org.bukkit.Location;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 public class SignRegister {
 	private Connection c;
 	
+	private PreparedStatement placeSellingSign, getSellingSign;
 	private PreparedStatement placeWantedSign, getWantedSign, setWantedSignHead;
 	
 	public SignRegister(Connection c) {
@@ -17,6 +19,27 @@ public class SignRegister {
 		
 		createTables();
 		prepareStatements();
+	}
+	
+	public void placeSellingSign(Location loc) {
+		try {
+			placeSellingSign.setString(1, Utils.parseLocation(loc));
+			placeSellingSign.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public SellingSign getSellingSign(Location loc, UUID placer) {
+		try {
+			getSellingSign.setString(1, Utils.parseLocation(loc));
+			ResultSet rs = getSellingSign.executeQuery();
+			if(rs.next())
+				return new SellingSign(placer);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void placeWantedSign(Location loc, int index) {
@@ -59,6 +82,12 @@ public class SignRegister {
 	private void createTables() {
 		try {
 			Statement s = c.createStatement();
+			s.execute("create table if not exists selling_sign (" +
+					          "location text," +
+					          "primary key (location)," +
+					          "foreign key (location) references block(location)" +
+					          "on delete cascade)");
+			
 			s.execute("create table if not exists wanted_sign (" +
 					          "location text, index integer, head_location text," +
 					          "primary key (location)," +
@@ -71,6 +100,9 @@ public class SignRegister {
 	
 	private void prepareStatements() {
 		try {
+			this.placeSellingSign = c.prepareStatement("insert or replace into selling_sign values (?)");
+			this.getSellingSign = c.prepareStatement("select * from selling_sign where location = ?");
+			
 			this.placeWantedSign = c.prepareStatement("insert or replace into wanted_sign values (?, ?, ?)");
 			this.getWantedSign = c.prepareStatement("select * from wanted_sign where location = ?");
 			this.setWantedSignHead = c.prepareStatement("update wanted_sign set head_location = ? where location = ?");
