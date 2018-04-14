@@ -63,7 +63,7 @@ public final class BlockRegister {
 			Statement s = c.createStatement();
 			s.execute("create table if not exists block (" +
 					          "location text, placer text, type text," +
-					          "primary key (location));");
+					          "primary key (location))");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}

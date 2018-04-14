@@ -64,7 +64,7 @@ public final class HeadRegister {
 					          "location text, owner text, durability integer, displayname text, lore text," +
 					          "primary key (location)," +
 					          "foreign key (location) references block(location)" +
-					          "on delete cascade);");
+					          "on delete cascade)");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}

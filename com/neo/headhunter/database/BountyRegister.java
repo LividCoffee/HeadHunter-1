@@ -195,7 +195,7 @@ public final class BountyRegister {
 			s.execute(
 					"create table if not exists bounty (" +
 							"hunter text, target text, amount real," +
-							"primary key (hunter, target));"
+							"primary key (hunter, target))"
 			);
 		} catch(SQLException e) {
 			e.printStackTrace();
