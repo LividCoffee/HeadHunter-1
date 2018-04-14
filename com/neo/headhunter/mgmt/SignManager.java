@@ -2,20 +2,18 @@ package com.neo.headhunter.mgmt;
 
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.database.BountyRegister;
+import com.neo.headhunter.database.SignRegister;
 import com.neo.headhunter.factory.RateFactory;
 import com.neo.headhunter.util.HeadUtils;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.config.Accessor;
 import com.neo.headhunter.util.config.Settings;
 import com.neo.headhunter.util.general.Duplet;
 import com.neo.headhunter.util.general.MappedList;
-import com.neo.headhunter.util.item.sign.SellingSign;
 import com.neo.headhunter.util.item.sign.WantedSign;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Sign;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -24,28 +22,23 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class SignManager extends BukkitRunnable {
-	private HeadHunter plugin;
 	private BountyRegister bountyRegister;
+	private SignRegister signRegister;
 	private RateFactory rateFactory;
 	
-	private Map<Location, SellingSign> sellingSigns;
-	private Map<Location, WantedSign> wantedSigns;
 	private Map<Player, Location> signLinks;
 	
 	public SignManager(HeadHunter plugin) {
-		this.plugin = plugin;
 		this.bountyRegister = plugin.getHHDB().getBountyRegister();
+		this.signRegister = plugin.getHHDB().getSignRegister();
 		this.rateFactory = plugin.getRateFactory();
 		
-		this.sellingSigns = new HashMap<>();
-		this.wantedSigns = new HashMap<>();
 		this.signLinks = new HashMap<>();
-		loadSigns();
+		//loadSigns();
 	}
 	
 	private void updateSellingSigns() {
-		for(Map.Entry<Location, SellingSign> entry : sellingSigns.entrySet()) {
-			Location signLoc = entry.getKey();
+		for(Location signLoc : signRegister.getSellingSigns()) {
 			if (!(signLoc.getBlock().getState() instanceof Sign))
 				return;
 			for (Player p : signLoc.getWorld().getPlayers()) {
@@ -65,11 +58,10 @@ public final class SignManager extends BukkitRunnable {
 	
 	private void updateWantedSigns() {
 		MappedList<UUID, Double> sortedBounties = bountyRegister.getSortedBounties();
-		for(Map.Entry<Location, WantedSign> entry : wantedSigns.entrySet()) {
-			Location signLoc = entry.getKey();
+		for(Location signLoc : signRegister.getWantedSigns()) {
 			if (!(signLoc.getBlock().getState() instanceof Sign))
 				return;
-			WantedSign sign = entry.getValue();
+			WantedSign sign = signRegister.getWantedSign(signLoc);
 			Duplet<UUID, Double> targetBounty = sortedBounties.get(sign.getBountyIndex());
 			OfflinePlayer target = targetBounty == null ? null : PlayerUtils.getPlayer(targetBounty.getT());
 			String targetName = target == null ? "N/A" : target.getName();
@@ -96,54 +88,7 @@ public final class SignManager extends BukkitRunnable {
 		updateWantedSigns();
 	}
 	
-	public void registerSellingSign(Player owner, Location signLoc) {
-		if(signLoc.getBlock().getState() instanceof Sign) {
-			sellingSigns.put(signLoc, new SellingSign(owner.getUniqueId()));
-			saveSellingSigns();
-		}
-	}
-	
-	public void unregisterSellingSign(Location signLoc) {
-		sellingSigns.remove(signLoc);
-		saveSellingSigns();
-	}
-	
-	public boolean isSellingSign(Location signLoc) {
-		return signLoc != null && signLoc.getBlock().getState() instanceof Sign && sellingSigns.containsKey(signLoc);
-	}
-	
-	public SellingSign getSellingSign(Location signLoc) {
-		return sellingSigns.get(signLoc);
-	}
-	
-	public void registerWantedSign(Player owner, Location signLoc, int index) {
-		if(signLoc.getBlock().getState() instanceof Sign) {
-			UUID ownerID = owner.getUniqueId();
-			WantedSign wantedSign = new WantedSign(ownerID);
-			wantedSign.setBountyIndex(Math.max(index, 0));
-			wantedSigns.put(signLoc, wantedSign);
-			saveWantedSigns();
-		}
-	}
-	
-	public void unregisterWantedSign(Location signLoc) {
-		wantedSigns.remove(signLoc);
-		saveWantedSigns();
-	}
-	
-	public boolean isWantedSign(Location signLoc) {
-		return signLoc != null && signLoc.getBlock().getState() instanceof Sign && wantedSigns.containsKey(signLoc);
-	}
-	
-	public WantedSign getWantedSign(Location signLoc) {
-		return wantedSigns.get(signLoc);
-	}
-	
-	public void saveSigns() {
-		saveSellingSigns();
-		saveWantedSigns();
-	}
-	
+	/*
 	public void saveSellingSigns() {
 		Accessor access = plugin.access(Utils.SGN);
 		access.getConfig().set("selling", null);
@@ -195,6 +140,7 @@ public final class SignManager extends BukkitRunnable {
 			}
 		}
 	}
+	*/
 	
 	public void putSignLink(Player p, Location loc) {
 		signLinks.put(p, loc);

@@ -2,11 +2,13 @@ package com.neo.headhunter.listener;
 
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.command.sub.CmdSellhead;
+import com.neo.headhunter.database.BlockRegister;
 import com.neo.headhunter.database.BountyRegister;
+import com.neo.headhunter.database.SignRegister;
 import com.neo.headhunter.mgmt.SignManager;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.item.sign.WantedSign;
+import com.neo.headhunter.util.item.BlockType;
 import com.neo.headhunter.util.message.Control;
 import com.neo.headhunter.util.message.Message;
 import net.milkbowl.vault.economy.Economy;
@@ -27,11 +29,17 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public final class ListenerSign implements Listener {
 	private Economy economy;
 	private BountyRegister bountyRegister;
+	private BlockRegister blockRegister;
+	private SignRegister signRegister;
+	
 	private SignManager signManager;
 	
 	public ListenerSign(HeadHunter plugin) {
 		this.economy = plugin.getEconomy();
 		this.bountyRegister = plugin.getHHDB().getBountyRegister();
+		this.blockRegister = plugin.getHHDB().getBlockRegister();
+		this.signRegister = plugin.getHHDB().getSignRegister();
+		
 		this.signManager = plugin.getSignManager();
 	}
 	
@@ -47,13 +55,13 @@ public final class ListenerSign implements Listener {
 		Location signLoc;
 		if(state instanceof Sign) {
 			signLoc = b.getLocation();
-			if(signManager.isSellingSign(signLoc)) {
+			if(blockRegister.isSellingSign(signLoc)) {
 				if(!PlayerUtils.hasAnyPermissions(p, CmdSellhead.P))
 					p.sendMessage(Message.NO_PERMS.f());
 				else
 					PlayerUtils.sellHeads(economy, p, p.isSneaking(), true);
 			}
-			else if(signManager.isWantedSign(signLoc)) {
+			else if(blockRegister.isWantedSign(signLoc)) {
 				if(!PlayerUtils.hasAnyPermissions(p, "hunter.admin", "hunter.sign", "hunter.sign.wanted"))
 					p.sendMessage(Message.NO_PERMS.f());
 				else {
@@ -66,13 +74,11 @@ public final class ListenerSign implements Listener {
 			signLoc = signManager.getSignLink(p);
 			if(signLoc == null)
 				return;
-			WantedSign wantedSign = signManager.getWantedSign(signLoc);
-			if(wantedSign != null) {
+			if(blockRegister.isWantedSign(signLoc)) {
 				if(!PlayerUtils.hasAnyPermissions(p, "hunter.admin", "hunter.sign", "hunter.sign.wanted"))
 					p.sendMessage(Message.NO_PERMS.f());
 				else {
-					wantedSign.setHeadLocation(b.getLocation());
-					signManager.saveWantedSigns();
+					signRegister.setWantedSignHead(signLoc, b.getLocation());
 					p.sendMessage(Control.WANTED_LINKED.success());
 					bountyRegister.setHeadUpdateRequired(true);
 				}
@@ -92,7 +98,8 @@ public final class ListenerSign implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-			signManager.registerSellingSign(p, event.getBlock().getLocation());
+			blockRegister.placeBlock(event.getBlock().getLocation(), p, BlockType.SELLING_SIGN);
+			signRegister.placeSellingSign(event.getBlock().getLocation());
 			p.sendMessage(Control.SIGN_CREATED.success());
 		}
 		else if(event.getLine(0).equalsIgnoreCase("[Wanted]") && Utils.isInteger(event.getLine(1))) {
@@ -101,7 +108,8 @@ public final class ListenerSign implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-			signManager.registerWantedSign(p, event.getBlock().getLocation(), Integer.parseInt(event.getLine(1)) - 1);
+			blockRegister.placeBlock(event.getBlock().getLocation(), p, BlockType.WANTED_SIGN);
+			signRegister.placeWantedSign(event.getBlock().getLocation(), Integer.parseInt(event.getLine(1)) - 1);
 			p.sendMessage(Control.WANTED_CREATED.success());
 		}
 	}
@@ -114,22 +122,22 @@ public final class ListenerSign implements Listener {
 		if(b == null || !(b.getState() instanceof Sign))
 			return;
 		Player p = event.getPlayer();
-		if(signManager.isSellingSign(b.getLocation())) {
+		if(blockRegister.isSellingSign(b.getLocation())) {
 			if(!PlayerUtils.hasAnyPermissions(p, "hunter.admin", "hunter.sign", "hunter.sign.selling")) {
 				p.sendMessage(Message.NO_PERMS.f());
 				event.setCancelled(true);
 				return;
 			}
-			signManager.unregisterSellingSign(b.getLocation());
+			blockRegister.breakBlock(b.getLocation());
 			p.sendMessage(Control.SIGN_REMOVED.success());
 		}
-		else if(signManager.isWantedSign(b.getLocation())) {
+		else if(blockRegister.isWantedSign(b.getLocation())) {
 			if(!PlayerUtils.hasAnyPermissions(p, "hunter.admin", "hunter.sign", "hunter.sign.wanted")) {
 				p.sendMessage(Message.NO_PERMS.f());
 				event.setCancelled(true);
 				return;
 			}
-			signManager.unregisterWantedSign(b.getLocation());
+			blockRegister.breakBlock(b.getLocation());
 			p.sendMessage(Control.WANTED_REMOVED.success());
 		}
 	}

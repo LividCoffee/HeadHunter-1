@@ -6,7 +6,8 @@ import com.neo.headhunter.util.item.sign.WantedSign;
 import org.bukkit.Location;
 
 import java.sql.*;
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SignRegister {
 	private Connection c;
@@ -30,16 +31,29 @@ public class SignRegister {
 		}
 	}
 	
-	public SellingSign getSellingSign(Location loc, UUID placer) {
+	public SellingSign getSellingSign(Location loc) {
 		try {
 			getSellingSign.setString(1, Utils.parseLocation(loc));
 			ResultSet rs = getSellingSign.executeQuery();
 			if(rs.next())
-				return new SellingSign(placer);
+				return new SellingSign();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Set<Location> getSellingSigns() {
+		Set<Location> result = new HashSet<>();
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery("select location from selling_sign");
+			while(rs.next())
+				result.add(Utils.readLocation(rs.getString(1)));
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public void placeWantedSign(Location loc, int index) {
@@ -53,12 +67,12 @@ public class SignRegister {
 		}
 	}
 	
-	public WantedSign getWantedSign(Location loc, UUID placer) {
+	public WantedSign getWantedSign(Location loc) {
 		try {
 			getWantedSign.setString(1, Utils.parseLocation(loc));
 			ResultSet rs = getWantedSign.executeQuery();
 			if(rs.next()) {
-				WantedSign result = new WantedSign(placer);
+				WantedSign result = new WantedSign();
 				result.setBountyIndex(rs.getInt(2));
 				result.setHeadLocation(Utils.readLocation(rs.getString(3)));
 				return result;
@@ -77,6 +91,19 @@ public class SignRegister {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Set<Location> getWantedSigns() {
+		Set<Location> result = new HashSet<>();
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery("select location from wanted_sign");
+			while(rs.next())
+				result.add(Utils.readLocation(rs.getString(1)));
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	private void createTables() {

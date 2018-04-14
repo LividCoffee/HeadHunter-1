@@ -58,6 +58,42 @@ public final class BlockRegister {
 		}
 	}
 	
+	public boolean isHead(Location loc) {
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery("select type from block where location = ?");
+			if(rs.next())
+				return rs.getString(1).equalsIgnoreCase(BlockType.HEAD.toString());
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean isSellingSign(Location loc) {
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery("select type from block where location = ?");
+			if(rs.next())
+				return rs.getString(1).equalsIgnoreCase(BlockType.SELLING_SIGN.toString());
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean isWantedSign(Location loc) {
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery("select type from block where location = ?");
+			if(rs.next())
+				return rs.getString(1).equalsIgnoreCase(BlockType.WANTED_SIGN.toString());
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	private void createTables() {
 		try {
 			Statement s = c.createStatement();
