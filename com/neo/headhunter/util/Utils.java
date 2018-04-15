@@ -31,7 +31,7 @@ public final class Utils {
 	}
 	
 	public static String parseLocation(Location loc) {
-		String result = loc.getWorld().toString();
+		String result = loc.getWorld().getName();
 		result += (DELIM + loc.getBlockX());
 		result += (DELIM + loc.getBlockY());
 		result += (DELIM + loc.getBlockZ());
