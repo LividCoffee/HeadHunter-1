@@ -226,6 +226,6 @@ public final class BountyRegister {
 		this.headUpdateRequired = headUpdateRequired;
 	}
 	
-	public static final int ERR_EXIST = -1;
-	public static final int ERR_REMOVE_AMOUNT = -2;
+	private static final int ERR_EXIST = -1;
+	private static final int ERR_REMOVE_AMOUNT = -2;
 }
