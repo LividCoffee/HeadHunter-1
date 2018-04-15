@@ -9,13 +9,13 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SignRegister {
+public final class SignRegister {
 	private Connection c;
 	
 	private PreparedStatement placeSellingSign, getSellingSign;
 	private PreparedStatement placeWantedSign, getWantedSign, setWantedSignHead;
 	
-	public SignRegister(Connection c) {
+	SignRegister(Connection c) {
 		this.c = c;
 		
 		createTables();
@@ -116,7 +116,7 @@ public class SignRegister {
 					          "on delete cascade)");
 			
 			s.execute("create table if not exists wanted_sign (" +
-					          "location text, index integer, head_location text," +
+					          "location text, bounty_index integer, head_location text," +
 					          "primary key (location)," +
 					          "foreign key (location) references block(location)" +
 					          "on delete cascade)");

@@ -90,7 +90,7 @@ public final class BountyRegister {
 		try {
 			addBounty.setString(1, hunter.getUniqueId().toString());
 			addBounty.setString(2, target.getUniqueId().toString());
-			addBounty.setDouble(3, amount);
+			addBounty.setDouble(3, getBounty(hunter, target) + amount);
 			addBounty.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -207,7 +207,7 @@ public final class BountyRegister {
 			this.getBounty = c.prepareStatement("select amount from bounty where hunter = ? and target = ?");
 			this.getTotalBounty = c.prepareStatement("select sum(amount) as amount from bounty where target = ?");
 			this.getGodfather = c.prepareStatement("select hunter, max(amount) as amount from bounty where target = ? group by target");
-			this.addBounty = c.prepareStatement("insert or replace into bounty values (?, ?, amount + ?)");
+			this.addBounty = c.prepareStatement("insert or replace into bounty values (?, ?, ?)");
 			this.removeBountyTarget = c.prepareStatement("delete from bounty where target = ?");
 			this.removeBountySingle = c.prepareStatement("delete from bounty where hunter = ? and target = ?");
 			this.removeBountyAmount = c.prepareStatement("update bounty set amount = amount - ? where hunter = ? and target = ?");
