@@ -33,7 +33,6 @@ public final class CmdWorldRemove {
                     break;
                 default:
                     sender.sendMessage(Usage.CMD_REMOVE.usage());
-                    sender.sendMessage(Usage.HELP_REMOVE.subtext());
                     break;
             }
             if(w != null) {

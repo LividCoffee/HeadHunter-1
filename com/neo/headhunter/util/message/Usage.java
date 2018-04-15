@@ -9,7 +9,7 @@ public enum Usage {
 	CMD_BOUNTY_REMOVE   ("/hunter bounty remove <target> [amount]"),
 	CMD_BOUNTY_CHECK    ("/hunter bounty check <target>"),
 	CMD_BOUNTY_LIST     ("/hunter bounty list [page]"),
-	HELP_SELLHEAD       ("Sell the factory stack in your hand"),
+	HELP_SELLHEAD       ("Sell the head stack in your hand"),
 	HELP_ADD            ("Register a world as a HeadHunter world"),
 	HELP_REMOVE         ("Unregister a world as a HeadHunter world"),
 	HELP_BOUNTY         ("Edit or view existing bounties");

@@ -33,7 +33,6 @@ public final class CmdWorldAdd {
                     break;
                 default:
                     sender.sendMessage(Usage.CMD_ADD.usage());
-                    sender.sendMessage(Usage.HELP_ADD.subtext());
                     break;
             }
             if(w != null) {

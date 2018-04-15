@@ -21,7 +21,6 @@ public final class CmdSellhead {
                     break;
                 default:
                     sender.sendMessage(Usage.CMD_SELLHEAD.usage());
-                    sender.sendMessage(Usage.HELP_SELLHEAD.subtext());
                     return false;
             }
 	        return PlayerUtils.sellHeads(economy, sender, sender.isSneaking(), false);

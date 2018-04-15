@@ -3,9 +3,14 @@ package com.neo.headhunter.command;
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.command.operator.CmdSave;
 import com.neo.headhunter.command.sub.CmdSellhead;
+import com.neo.headhunter.command.sub.bounty.CmdBountyAdd;
+import com.neo.headhunter.command.sub.bounty.CmdBountyCheck;
+import com.neo.headhunter.command.sub.bounty.CmdBountyList;
+import com.neo.headhunter.command.sub.bounty.CmdBountyRemove;
 import com.neo.headhunter.command.sub.world.CmdWorldAdd;
 import com.neo.headhunter.command.sub.world.CmdWorldRemove;
 import com.neo.headhunter.util.message.Control;
+import com.neo.headhunter.util.message.Usage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,45 +43,35 @@ public final class MainExecutor implements CommandExecutor {
 					return CmdWorldAdd.run(sender, args, plugin.getLandManager());
 				case "removeworld":
 					return CmdWorldRemove.run(sender, args, plugin.getLandManager());
-					/*
 				case "bounty":
 					if(args.length >= 2) {
 						switch(args[1]) {
 						case "add":
-							CmdBountyAdd.run(
-									p, args,
-									plugin.getEconomy(),
-									plugin.getBountyManager()
-							);
-							break;
+							if(!(sender instanceof Player)) {
+								sender.sendMessage(Control.PLAYERS_ONLY.error());
+								return false;
+							}
+							return CmdBountyAdd.run((Player) sender, args, plugin.getEconomy(), plugin.getHHDB().getBountyRegister());
 						case "remove":
-							CmdBountyRemove.run(
-									p, args,
-									plugin.getEconomy(),
-									plugin.getBountyManager()
-							);
-							break;
+							if(!(sender instanceof Player)) {
+								sender.sendMessage(Control.PLAYERS_ONLY.error());
+								return false;
+							}
+							return CmdBountyRemove.run((Player) sender, args, plugin.getEconomy(), plugin.getHHDB().getBountyRegister());
 						case "check":
-							CmdBountyCheck.run(
-									p, args,
-									plugin.getBountyManager()
-							);
-							break;
+							return CmdBountyCheck.run(sender, args, plugin.getHHDB().getBountyRegister());
 						case "list":
-							CmdBountyList.run(
-									p, args,
-									plugin.getBountyManager(),
-									plugin.getWaitress()
-							);
-							break;
+							return CmdBountyList.run(sender, args, plugin.getHHDB().getBountyRegister());
 						default:
-							p.sendMessage(Message.CMD.x() + Message.CMD_BOUNTY.x());
+							sender.sendMessage(Usage.CMD_BOUNTY.usage());
 							break;
 						}
 					}
-					else
-						p.sendMessage(Message.CMD.x() + Message.CMD_BOUNTY.x());
+					else {
+						sender.sendMessage(Usage.CMD_BOUNTY.usage());
+					}
 					break;
+					/*
 				case "reload":
 					CmdReload.run(p, plugin);
 					break;
@@ -111,9 +106,18 @@ public final class MainExecutor implements CommandExecutor {
 	}
 	
 	private static void sendHelpMessages(CommandSender sender) {
+		sender.sendMessage(Usage.CMD_ADD.usage());
+		sender.sendMessage(Usage.HELP_ADD.subtext());
+		sender.sendMessage(Usage.CMD_REMOVE.usage());
+		sender.sendMessage(Usage.HELP_REMOVE.subtext());
 		if(sender instanceof Player) {
-			//TODO send player-only commands
+			sender.sendMessage(Usage.CMD_SELLHEAD.usage());
+			sender.sendMessage(Usage.HELP_SELLHEAD.subtext());
+			sender.sendMessage(Usage.CMD_BOUNTY_ADD.usage());
+			sender.sendMessage(Usage.CMD_BOUNTY_REMOVE.usage());
 		}
-		//TODO
+		sender.sendMessage(Usage.CMD_BOUNTY_CHECK.usage());
+		sender.sendMessage(Usage.CMD_BOUNTY_LIST.usage());
+		sender.sendMessage(Usage.HELP_BOUNTY.subtext());
 	}
 }
