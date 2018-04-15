@@ -1,6 +1,7 @@
 package com.neo.headhunter.command;
 
 import com.neo.headhunter.HeadHunter;
+import com.neo.headhunter.command.operator.CmdReload;
 import com.neo.headhunter.command.operator.CmdSave;
 import com.neo.headhunter.command.sub.CmdSellhead;
 import com.neo.headhunter.command.sub.bounty.CmdBountyAdd;
@@ -71,11 +72,8 @@ public final class MainExecutor implements CommandExecutor {
 						sender.sendMessage(Usage.CMD_BOUNTY.usage());
 					}
 					break;
-					/*
 				case "reload":
-					CmdReload.run(p, plugin);
-					break;
-					*/
+					return CmdReload.run(sender, plugin);
 				case "save":
 					if(!(sender instanceof Player)) {
 						sender.sendMessage(Control.PLAYERS_ONLY.error());
