@@ -36,7 +36,7 @@ public final class MainExecutor implements CommandExecutor {
 				switch(args[0]) {
 				case "sellhead":
 					if(!(sender instanceof Player)) {
-						sender.sendMessage(Control.PLAYERS_ONLY.error());
+						sender.sendMessage(Control.PLAYERS_ONLY.error("sellhead"));
 						return false;
 					}
 					return CmdSellhead.run((Player) sender, args, plugin.getEconomy());
@@ -49,13 +49,13 @@ public final class MainExecutor implements CommandExecutor {
 						switch(args[1]) {
 						case "add":
 							if(!(sender instanceof Player)) {
-								sender.sendMessage(Control.PLAYERS_ONLY.error());
+								sender.sendMessage(Control.PLAYERS_ONLY.error("bounty.add"));
 								return false;
 							}
 							return CmdBountyAdd.run((Player) sender, args, plugin.getEconomy(), plugin.getHHDB().getBountyRegister());
 						case "remove":
 							if(!(sender instanceof Player)) {
-								sender.sendMessage(Control.PLAYERS_ONLY.error());
+								sender.sendMessage(Control.PLAYERS_ONLY.error("bounty.remove"));
 								return false;
 							}
 							return CmdBountyRemove.run((Player) sender, args, plugin.getEconomy(), plugin.getHHDB().getBountyRegister());
@@ -76,7 +76,7 @@ public final class MainExecutor implements CommandExecutor {
 					return CmdReload.run(sender, plugin);
 				case "save":
 					if(!(sender instanceof Player)) {
-						sender.sendMessage(Control.PLAYERS_ONLY.error());
+						sender.sendMessage(Control.PLAYERS_ONLY.error("save"));
 						return false;
 					}
 					return CmdSave.run((Player) sender, args, plugin);
@@ -88,10 +88,6 @@ public final class MainExecutor implements CommandExecutor {
 			break;
 		case "sellhead":
 		case "bounty":
-			if(!(sender instanceof Player)) {
-				sender.sendMessage(Control.PLAYERS_ONLY.error());
-				return false;
-			}
 			StringBuilder newCmd = new StringBuilder("hunter " + label);
 			for(String arg : args) {
 				newCmd.append(" ");
