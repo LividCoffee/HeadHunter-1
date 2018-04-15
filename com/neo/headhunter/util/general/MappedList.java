@@ -7,7 +7,7 @@ import java.util.*;
  * @param <K> Key type
  * @param <V> Value type
  */
-public final class MappedList<K, V extends Comparable<V>> {
+public final class MappedList<K, V extends Comparable<V>> implements Iterable<K> {
 	private final Map<K, V> map;
 	private final List<K> order;
 	private final boolean reversed;
@@ -76,6 +76,11 @@ public final class MappedList<K, V extends Comparable<V>> {
 				res.add(null);
 		}
 		return res;
+	}
+	
+	@Override
+	public Iterator<K> iterator() {
+		return order.iterator();
 	}
 	
 	private final Comparator<K> comparator = new Comparator<K>() {
