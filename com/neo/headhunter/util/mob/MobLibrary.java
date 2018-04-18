@@ -1,7 +1,6 @@
 package com.neo.headhunter.util.mob;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Accessor;
 import org.bukkit.Material;
@@ -13,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Reloadable: Yes<p>
@@ -146,15 +144,50 @@ public final class MobLibrary {
     public ItemStack getBaseHead(LivingEntity entity) {
         return getBaseHead(getEntityTag(entity));
     }
-
-    public String getTagFromHeadOwner(String headOwner) {
-        for(Map.Entry<String, ItemStack> entry : BASE_HEAD_MAP.entrySet()) {
-            ItemStack head = entry.getValue();
-            SkullMeta meta = (SkullMeta) head.getItemMeta();
-            if(headOwner != null && meta.hasOwner() && headOwner.equals(meta.getOwner()))
-                return entry.getKey();
-        }
-        return PlayerUtils.getPlayer(headOwner) == null ? null : "PLAYER";
+    
+    public String getTagFromHead(ItemStack head) {
+    	if(head == null || head.getType() != Material.SKULL_ITEM)
+    		throw new IllegalArgumentException("head must be of Material SKULL_ITEM");
+    	SkullMeta meta = (SkullMeta) head.getItemMeta();
+    	switch(head.getDurability()) {
+	    case 0:
+	    	return "Skeleton";
+	    case 1:
+	    	return "WitherSkeleton";
+	    case 2:
+	    	return "Zombie";
+	    case 4:
+	    	return "Creeper";
+	    default:
+	    	String owner = meta.getOwner();
+	    	switch(owner) {
+		    case "Bat":
+		    case "Horse":
+		    case "Husk":
+		    case "Llama":
+		    case "ParrotBlue":
+		    case "ParrotCyan":
+		    case "ParrotGreen":
+		    case "ParrotGray":
+		    case "ParrotRed":
+		    case "Silverfish":
+		    	return owner;
+		    case "MHF_LavaSlime":
+		    	return "MagmaCube";
+		    case "MHF_MushroomCow":
+		    	return "Mooshroom";
+		    case "Polar Bear":
+		    	return "PolarBear";
+		    case "MHF_Wither":
+		    	return "WitherBoss";
+		    case "MHF_PigZombie":
+		    	return "ZombiePigman";
+		    default:
+			    if(owner.startsWith("MHF_"))
+				    return owner.replace("MHF_", "");
+		    	return null;
+		    }
+	    }
     }
 
     public boolean isValidEntityTag(String tag) {
@@ -173,6 +206,7 @@ public final class MobLibrary {
         ax.saveConfig();
     }
 
+    //
     private void loadEntityTags() {
         ENTITY_TAG_MAP.put("Bat", "Bat");
         ENTITY_TAG_MAP.put("Blaze", "Blaze");

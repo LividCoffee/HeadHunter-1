@@ -5,16 +5,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public final class HeadData {
-	private String owner;
-	private short durability;
-	private String displayName;
-	private String lore;
+	private final String owner;
+	private final String displayName;
+	private final String lore;
 	
 	public HeadData(ItemStack head) {
 		if(head != null && head.getType() == Material.SKULL_ITEM) {
 			SkullMeta meta = (SkullMeta) head.getItemMeta();
 			this.owner = meta.getOwner();
-			this.durability = head.getDurability();
 			this.displayName = meta.getDisplayName();
 			StringBuilder lore = new StringBuilder();
 			boolean newLine = false;
@@ -26,14 +24,15 @@ public final class HeadData {
 			}
 			this.lore = lore.toString();
 		}
+		else {
+			this.owner = null;
+			this.displayName = null;
+			this.lore = null;
+		}
 	}
 	
 	public String getOwner() {
 		return owner;
-	}
-	
-	public short getDurability() {
-		return durability;
 	}
 	
 	public String getDisplayName() {

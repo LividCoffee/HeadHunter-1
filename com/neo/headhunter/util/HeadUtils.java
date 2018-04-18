@@ -3,6 +3,7 @@ package com.neo.headhunter.util;
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.util.config.Accessor;
 import com.neo.headhunter.util.config.Settings;
+import com.neo.headhunter.util.item.head.HeadData;
 import com.neo.headhunter.util.item.head.HeadLootData;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -83,6 +84,10 @@ public final class HeadUtils {
 		if(Settings.isEnchant_custom_allowedTools() && EnchantmentTarget.TOOL.includes(item))
 			return true;
 		return EnchantmentTarget.WEAPON.includes(item);
+	}
+	
+	public static HeadData getData(ItemStack head) {
+		return new HeadData(head);
 	}
 	
 	public static void saveItemStack(HeadHunter plugin, String key, ItemStack item) {

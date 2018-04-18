@@ -1,7 +1,9 @@
 package com.neo.headhunter.database;
 
+import com.neo.headhunter.util.HeadUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.item.head.HeadData;
+import com.neo.headhunter.util.mob.MobLibrary;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,11 +14,13 @@ import java.util.Arrays;
 
 public final class HeadRegister {
 	private Connection c;
+	private MobLibrary mobLibrary;
 	
 	private PreparedStatement placeHead, getHead;
 	
-	HeadRegister(Connection c) {
+	HeadRegister(Connection c, MobLibrary mobLibrary) {
 		this.c = c;
+		this.mobLibrary = mobLibrary;
 		
 		createTables();
 		prepareStatements();
@@ -26,10 +30,10 @@ public final class HeadRegister {
 		try {
 			if(head == null || head.getType() != Material.SKULL_ITEM)
 				return;
-			HeadData headData = new HeadData(head);
+			HeadData headData = HeadUtils.getData(head);
 			placeHead.setString(1, Utils.parseLocation(loc));
-			placeHead.setString(2, headData.getOwner());
-			placeHead.setShort(3, headData.getDurability());
+			placeHead.setString(2, mobLibrary.getTagFromHead(head));
+			placeHead.setString(3, headData.getOwner());
 			placeHead.setString(4, headData.getDisplayName());
 			placeHead.setString(5, headData.getLore());
 			placeHead.executeUpdate();
@@ -43,9 +47,14 @@ public final class HeadRegister {
 			getHead.setString(1, Utils.parseLocation(loc));
 			ResultSet rs = getHead.executeQuery();
 			if(rs.next()) {
-				ItemStack result = new ItemStack(Material.SKULL_ITEM, 1, rs.getShort(3));
+				String entityTag = rs.getString(2);
+				ItemStack result;
+				if(entityTag == null)
+					result = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+				else
+					result = mobLibrary.getBaseHead(entityTag);
 				SkullMeta meta = (SkullMeta) result.getItemMeta();
-				meta.setOwner(rs.getString(2));
+				meta.setOwner(rs.getString(3));
 				meta.setDisplayName(rs.getString(4));
 				meta.setLore(Arrays.asList(rs.getString(5).split("\\Q\n\\E")));
 				result.setItemMeta(meta);
@@ -61,7 +70,7 @@ public final class HeadRegister {
 		try {
 			Statement s = c.createStatement();
 			s.execute("create table if not exists head (" +
-					          "location text, owner text, durability integer, displayname text, lore text," +
+					          "location text, entity_tag text, owner text, display_name text, lore text," +
 					          "primary key (location)," +
 					          "foreign key (location) references block(location)" +
 					          "on delete cascade)");
@@ -72,7 +81,7 @@ public final class HeadRegister {
 	
 	private void prepareStatements() {
 		try {
-			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?, ?)");
+			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?)");
 			this.getHead = c.prepareStatement("select * from head where location = ?");
 		} catch(SQLException e) {
 			e.printStackTrace();

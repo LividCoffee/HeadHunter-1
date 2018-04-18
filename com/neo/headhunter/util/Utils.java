@@ -10,11 +10,9 @@ import java.util.Random;
 
 public final class Utils {
 	public static final String  CFG =   "config.yml";
-	public static final String  DAT =   "database.db";
 	public static final String  MSG =   "messages.yml";
 	public static final String  MOB =   "mobhunter.yml";
 	public static final String  MDB =   "mhdb.yml";
-	public static final String  SGN =   "signs.yml";
 	public static final String  TMP =   "temp.yml";
 	
 	private static final String DELIM = ":";

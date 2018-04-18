@@ -3,7 +3,7 @@ package com.neo.headhunter.util.message;
 import com.neo.headhunter.util.Utils;
 
 public enum Control {
-	RELOADED            ("&cHeadHunter v%% reloaded."),
+	RELOADED            ("&6HeadHunter v%% reloaded."),
 	PLAYERS_ONLY        ("&cThe '%%' command can only be used by players."),
 	WORLD_ADDED         ("&aHeadHunter world %% added."),
 	WORLD_REMOVED       ("&aHeadHunter world %% removed."),

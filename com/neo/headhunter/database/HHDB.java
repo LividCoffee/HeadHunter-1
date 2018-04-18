@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 
 public final class HHDB {
@@ -27,9 +28,11 @@ public final class HHDB {
 		if(c == null)
 			throw new IllegalArgumentException("connection is null");
 		
+		pragma();
+		
 		this.bountyRegister = new BountyRegister(c);
 		this.blockRegister = new BlockRegister(c);
-		this.headRegister = new HeadRegister(c);
+		this.headRegister = new HeadRegister(c, plugin.getMobLibrary());
 		this.signRegister = new SignRegister(c);
 	}
 	
@@ -53,7 +56,7 @@ public final class HHDB {
 		if (!dbFile.exists()){
 			try {
 				if(dbFile.createNewFile())
-					plugin.getLogger().log(Level.INFO, "HeadHunter successfully created database file");
+					plugin.getLogger().log(Level.INFO, "HeadHunter successfully created new database file");
 			} catch (IOException e) {
 				plugin.getLogger().log(Level.SEVERE, "File write error: " + dbFile);
 			}
@@ -70,5 +73,14 @@ public final class HHDB {
 			plugin.getLogger().log(Level.SEVERE, "Missing SQLite JBDC library");
 		}
 		return null;
+	}
+	
+	private void pragma() {
+		try {
+			Statement s = c.createStatement();
+			s.execute("pragma foreign_keys = on");
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
