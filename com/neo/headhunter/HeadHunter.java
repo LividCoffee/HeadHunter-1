@@ -19,13 +19,20 @@ import com.neo.headhunter.util.mob.MobLibrary;
 import com.neo.headhunter.util.mob.MobSettings;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
 
 public class HeadHunter extends JavaPlugin {
+	public static final String VERSION = "2.0.0";
+	
 	private Economy economy;
 	
 	private HHDB hhdb;
@@ -43,10 +50,7 @@ public class HeadHunter extends JavaPlugin {
 	
 	@Override
     public void onEnable() {
-		filePreparation();
-		
-		//Default configuration
-		access(Utils.CFG).saveDefaultConfig();
+		prepareFiles();
 		
 	    //Hard dependencies
 	    try {
@@ -97,15 +101,51 @@ public class HeadHunter extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("§a" + getTag() + " has been Disabled!");
     }
     
-    private void filePreparation() {
-		this.getDataFolder().mkdir();
-		String[] fileNames = {Utils.CFG, Utils.MOB, Utils.MDB, Utils.MSG};
-		for(String fileName : fileNames) {
-			try {
-				(new File(this.getDataFolder() + File.separator + fileName)).createNewFile();
-			} catch(IOException ex) {
-				ex.printStackTrace();
+    private void prepareFiles() {
+		try {
+			if (getDataFolder().mkdir())
+				getLogger().log(Level.INFO, "New HeadHunter plugin directory successfully created");
+			
+			File configFile = new File(getDataFolder() + File.separator + Utils.CFG);
+			if (!configFile.exists())
+				saveResource(Utils.CFG, true);
+			else {
+				FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+				String currentVersion = null;
+				if(config.contains(Utils.VERSION_PATH))
+					currentVersion = config.getString(Utils.VERSION_PATH);
+				if(currentVersion == null || !currentVersion.equals(VERSION)) {
+					//current version is incorrect
+					Map<String, Object> oldValues = new HashMap<>();
+					for(Map.Entry<String, Object> entry : config.getValues(true).entrySet()) {
+						if(!(entry.getValue() instanceof MemorySection))
+							oldValues.put(entry.getKey(), entry.getValue());
+					}
+					saveResource(Utils.CFG, true);
+					config = YamlConfiguration.loadConfiguration(configFile);
+					for(String key : config.getKeys(true)) {
+						if(oldValues.containsKey(key))
+							config.set(key, oldValues.get(key));
+					}
+					config.set(Utils.VERSION_PATH, VERSION);
+					saveConfig();
+				}
+				//ignore config file with correct version
 			}
+			
+			//always replace
+			saveResource(Utils.MDB, true);
+			
+			//create empty 'mobhunter.yml' file
+			File mobFile = new File(getDataFolder() + File.separator + Utils.MOB);
+			if(!mobFile.exists()) {
+				if(mobFile.createNewFile())
+					getLogger().log(Level.INFO, "New HeadHunter file 'mobhunter.yml' successfully created");
+				else
+					getLogger().log(Level.SEVERE, "New HeadHunter file 'mobhunter.yml' could not be created");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
     }
     

@@ -27,7 +27,7 @@ public final class Accessor {
         try {
             if (!configFile.exists()) {
                 if (!configFile.createNewFile())
-                    System.out.println("Error occurred while accessing " + fileName + "!");
+                    this.plugin.getLogger().log(Level.SEVERE, "Error occurred while accessing " + fileName + "!");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,6 +85,6 @@ public final class Accessor {
     public void deleteFile() {
         if(this.configFile != null && this.configFile.exists())
             if(!this.configFile.delete())
-                System.out.println("Error occurred while deleting " + this.fileName + "!");
+                this.plugin.getLogger().log(Level.SEVERE, "Error occurred while deleting " + this.fileName + "!");
     }
 }

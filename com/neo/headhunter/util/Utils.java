@@ -9,6 +9,8 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 public final class Utils {
+	public static final String  VERSION_PATH =  "do-not-change-this-ever";
+	
 	public static final String  CFG =   "config.yml";
 	public static final String  MSG =   "messages.yml";
 	public static final String  MOB =   "mobhunter.yml";
@@ -78,11 +80,7 @@ public final class Utils {
 	}
 	
 	public static boolean isMoney(String num) {
-		return num.matches("[1-9][0-9]*[.][0-9]{2}");
-	}
-	
-	public static boolean isPercentage(String num) {
-		return num.matches("[1-9][0-9]*([.][0-9]*)?[%]");
+		return num.matches("[0-9]+[.][0-9]{2}");
 	}
 	
 	public static boolean isInteger(String num) {
