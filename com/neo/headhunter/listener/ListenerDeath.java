@@ -50,7 +50,7 @@ public final class ListenerDeath implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		LivingEntity target = event.getEntity();
 		EntityDamageEvent damageEvent = target.getLastDamageCause();
-		EntityDamageEvent.DamageCause deathCause = null;
+		EntityDamageEvent.DamageCause deathCause;
 		if(damageEvent != null)
 			deathCause = damageEvent.getCause();
 		else

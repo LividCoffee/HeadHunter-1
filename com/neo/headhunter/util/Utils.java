@@ -63,10 +63,6 @@ public final class Utils {
 		return Bukkit.getPluginManager().isPluginEnabled(plugin);
 	}
 	
-	public static double round(double d) {
-		return Math.round(d * 100.0) / 100.0;
-	}
-	
 	public static String toMoney(double value) {
 		return MONEY.format(value);
 	}

@@ -94,7 +94,7 @@ public final class RateFactory {
 			if(hunter != null) {
 				for (PermissionAttachmentInfo pai : hunter.getEffectivePermissions()) {
 					String perm = pai.getPermission();
-					if (perm.matches("\\QQhunter.droprate.\\E[A-Za-z]+:[0-9]+")) {
+					if (perm.matches("\\Qhunter.droprate.\\E[A-Za-z]+:[0-9]+")) {
 						if(pai.getValue()) {
 							String info = perm.replace("hunter.droprate.", "");
 							String[] mobRate = info.split(":");

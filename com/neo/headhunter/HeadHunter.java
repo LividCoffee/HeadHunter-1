@@ -137,9 +137,9 @@ public class HeadHunter extends JavaPlugin {
 			File mobFile = new File(getDataFolder() + File.separator + Utils.MOB);
 			if(!mobFile.exists()) {
 				if(mobFile.createNewFile())
-					getLogger().log(Level.INFO, "New HeadHunter file 'mobhunter.yml' successfully created");
+					getLogger().log(Level.INFO, "New HeadHunter file " + Utils.MOB + " successfully created");
 				else
-					getLogger().log(Level.SEVERE, "New HeadHunter file 'mobhunter.yml' could not be created");
+					getLogger().log(Level.SEVERE, "New HeadHunter file " + Utils.MOB + " could not be created");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
