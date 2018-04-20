@@ -81,7 +81,7 @@ public final class HeadRegister {
 	
 	private void prepareStatements() {
 		try {
-			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?)");
+			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?, ?)");
 			this.getHead = c.prepareStatement("select * from head where location = ?");
 		} catch(SQLException e) {
 			e.printStackTrace();
