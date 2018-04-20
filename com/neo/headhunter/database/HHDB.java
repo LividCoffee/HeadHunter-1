@@ -15,6 +15,7 @@ public final class HHDB {
 	private File dbFile;
 	private Connection c;
 	
+	private WorldRegister worldRegister;
 	private BountyRegister bountyRegister;
 	private BlockRegister blockRegister;
 	private HeadRegister headRegister;
@@ -28,12 +29,17 @@ public final class HHDB {
 		if(c == null)
 			throw new IllegalArgumentException("connection is null");
 		
-		pragma();
+		setupSQLite();
 		
+		this.worldRegister = new WorldRegister(c);
 		this.bountyRegister = new BountyRegister(c);
 		this.blockRegister = new BlockRegister(c);
 		this.headRegister = new HeadRegister(c, plugin.getMobLibrary());
 		this.signRegister = new SignRegister(c);
+	}
+	
+	public WorldRegister getWorldRegister() {
+		return worldRegister;
 	}
 	
 	public BountyRegister getBountyRegister() {
@@ -75,7 +81,7 @@ public final class HHDB {
 		return null;
 	}
 	
-	private void pragma() {
+	private void setupSQLite() {
 		try {
 			Statement s = c.createStatement();
 			s.execute("pragma foreign_keys = on");

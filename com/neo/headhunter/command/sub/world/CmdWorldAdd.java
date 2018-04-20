@@ -1,6 +1,6 @@
 package com.neo.headhunter.command.sub.world;
 
-import com.neo.headhunter.mgmt.LandManager;
+import com.neo.headhunter.database.WorldRegister;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.message.Control;
 import com.neo.headhunter.util.message.Message;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 public final class CmdWorldAdd {
     private static final String[] P = {"hunter.admin", "hunter.world", "hunter.world.add"};
 
-    public static boolean run(CommandSender sender, String[] args, LandManager landManager) {
+    public static boolean run(CommandSender sender, String[] args, WorldRegister worldRegister) {
         if(PlayerUtils.hasAnyPermissions(sender, P)) {
             World w = null;
             switch(args.length) {
@@ -36,7 +36,7 @@ public final class CmdWorldAdd {
                     break;
             }
             if(w != null) {
-                if(landManager.addWorld(w)) {
+                if(worldRegister.addWorld(w)) {
 	                sender.sendMessage(Control.WORLD_ADDED.success(w.getName()));
 	                return true;
                 }

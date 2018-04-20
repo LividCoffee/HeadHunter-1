@@ -6,9 +6,9 @@ import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.FactionColl;
 import com.massivecraft.massivecore.ps.PS;
 import com.neo.headhunter.HeadHunter;
+import com.neo.headhunter.database.WorldRegister;
 import com.neo.headhunter.listener.support.ListenerMinigames;
 import com.neo.headhunter.mgmt.CooldownManager;
-import com.neo.headhunter.mgmt.LandManager;
 import com.neo.headhunter.util.MetaUtils;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
@@ -23,20 +23,20 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Requires: ListenerMinigames, CooldownManager, LandManager, RateFactory
+ * Requires: ListenerMinigames, CooldownManager, WorldRegister, RateFactory
  */
 public final class DropFactory {
 	private ListenerMinigames listenerMinigames;
 	private CooldownManager cooldownManager;
 	
-	private LandManager landManager;
+	private WorldRegister worldRegister;
 	private RateFactory rateFactory;
 	
 	public DropFactory(HeadHunter plugin) {
 		this.listenerMinigames = plugin.getListenerMinigames();
 		this.cooldownManager = plugin.getCooldownManager();
 		
-		this.landManager = plugin.getLandManager();
+		this.worldRegister = plugin.getHHDB().getWorldRegister();
 		this.rateFactory = plugin.getRateFactory();
 	}
 	
@@ -45,7 +45,7 @@ public final class DropFactory {
 			return false;
 		if(isMaster(hunter))
 			return true;
-		if(!landManager.isValidDropLocation(target))
+		if(!worldRegister.isValidDropLocation(target))
 			return false;
 		
 		if(!isValidDrop_Factions(target))

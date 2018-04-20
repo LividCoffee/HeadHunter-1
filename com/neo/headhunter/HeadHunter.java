@@ -9,7 +9,6 @@ import com.neo.headhunter.listener.*;
 import com.neo.headhunter.listener.support.ListenerMinigames;
 import com.neo.headhunter.listener.support.ListenerMobStacker;
 import com.neo.headhunter.mgmt.CooldownManager;
-import com.neo.headhunter.mgmt.LandManager;
 import com.neo.headhunter.mgmt.SignManager;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Accessor;
@@ -31,7 +30,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public class HeadHunter extends JavaPlugin {
-	public static final String VERSION = "2.0.0";
+	private static final String VERSION = "2.0.0";
 	
 	private Economy economy;
 	
@@ -41,7 +40,6 @@ public class HeadHunter extends JavaPlugin {
 	private ListenerCombustion listenerCombustion;
 	
 	private CooldownManager cooldownManager;
-	private LandManager landManager;
 	private MobLibrary mobLibrary;
 	private RateFactory rateFactory;
 	private SignManager signManager;
@@ -74,7 +72,6 @@ public class HeadHunter extends JavaPlugin {
 	    Message.save(this);
 	    
 	    this.cooldownManager = new CooldownManager();
-	    this.landManager = new LandManager(this);
 	    this.mobLibrary = new MobLibrary(this);
 	    this.rateFactory = new RateFactory(this);
 	    this.signManager = new SignManager(this);
@@ -181,10 +178,6 @@ public class HeadHunter extends JavaPlugin {
 	
 	public CooldownManager getCooldownManager() {
 		return cooldownManager;
-	}
-	
-	public LandManager getLandManager() {
-		return landManager;
 	}
 	
 	public MobLibrary getMobLibrary() {

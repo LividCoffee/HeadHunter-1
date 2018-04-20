@@ -41,9 +41,9 @@ public final class MainExecutor implements CommandExecutor {
 					}
 					return CmdSellhead.run((Player) sender, args, plugin.getEconomy());
 				case "addworld":
-					return CmdWorldAdd.run(sender, args, plugin.getLandManager());
+					return CmdWorldAdd.run(sender, args, plugin.getHHDB().getWorldRegister());
 				case "removeworld":
-					return CmdWorldRemove.run(sender, args, plugin.getLandManager());
+					return CmdWorldRemove.run(sender, args, plugin.getHHDB().getWorldRegister());
 				case "bounty":
 					if(args.length >= 2) {
 						switch(args[1]) {
