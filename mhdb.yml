@@ -54,7 +54,7 @@ Donkey:
   meta:
     ==: ItemMeta
     meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2LQU+DMBhAP41LkPgzvJK0KwU5qkzXZS26jTF6g63b6NrNMDDCr/InytHjy3vPBXDhYXlqjfmoL/vKKAdu2Q4eSYTGJPBDrxxHxPMppd5TifZeSSmmoY/DAhcuuMP0peqmUtd7cBr107S1uroAcOPAaF2YVsGv6mZIbo5ot5mZbceCgVdLZBKmv0J2XnflKwuYHfz0OZh30b+WNkVGTU5mR3n+bEu7RnOyMGq6wFubfgs9oTxmfrI69Dw+EN6/aBFvkegZTTJRiWyC5fuE5j3DScz9XL+deJxSaVMkrNS8z4dXWpmlY6EZ4fpU7Tc4AnDgThRWwWh6qa8K4A977f35JgEAAA==
+    internal: H4sIAAAAAAAAAE2PwU6DQBRFnyYmSPwMtyTDwEBZdGEsbYcUkBaxw67AINAZbFqohe/yAyVx4/Lknrs4KoAKT7tjL8Tb+ausBVfgnhbwjDDGCJeF5hDT0kzTwVo2yywts60Zd4iN9ByroE6nEz93Nb88gtLxW9ef+UUFgDsFHpKD6Dn88MFD6b5Cxd4T+UCtieMdEiFtTjZtkyF7pRaV075+sTaD888l3eGDCGZ4VdpGfSYTtDG2gq+3ei7frwH26mBFh3DxScJ4KVJJTYbd72CMRiaThuFE+qM7BHFV++Py6I9C+k1Egj/3xkbR+HFVBQvXYNJF4YoR2upOGc3nUwH8Ar7AeVIcAQAA
     skull-owner: Horse
 ElderGuardian:
   ==: org.bukkit.inventory.ItemStack
@@ -117,7 +117,7 @@ Horse:
   meta:
     ==: ItemMeta
     meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2LQU+DMBhAP41LkPgzvJK0KwU5qkzXZS26jTF6g63b6NrNMDDCr/InytHjy3vPBXDhYXlqjfmoL/vKKAdu2Q4eSYTGJPBDrxxHxPMppd5TifZeSSmmoY/DAhcuuMP0peqmUtd7cBr107S1uroAcOPAaF2YVsGv6mZIbo5ot5mZbceCgVdLZBKmv0J2XnflKwuYHfz0OZh30b+WNkVGTU5mR3n+bEu7RnOyMGq6wFubfgs9oTxmfrI69Dw+EN6/aBFvkegZTTJRiWyC5fuE5j3DScz9XL+deJxSaVMkrNS8z4dXWpmlY6EZ4fpU7Tc4AnDgThRWwWh6qa8K4A977f35JgEAAA==
+    internal: H4sIAAAAAAAAAE2PwU6DQBRFnyYmSPwMtyTDwEBZdGEsbYcUkBaxw67AINAZbFqohe/yAyVx4/Lknrs4KoAKT7tjL8Tb+ausBVfgnhbwjDDGCJeF5hDT0kzTwVo2yywts60Zd4iN9ByroE6nEz93Nb88gtLxW9ef+UUFgDsFHpKD6Dn88MFD6b5Cxd4T+UCtieMdEiFtTjZtkyF7pRaV075+sTaD888l3eGDCGZ4VdpGfSYTtDG2gq+3ei7frwH26mBFh3DxScJ4KVJJTYbd72CMRiaThuFE+qM7BHFV++Py6I9C+k1Egj/3xkbR+HFVBQvXYNJF4YoR2upOGc3nUwH8Ar7AeVIcAQAA
     skull-owner: Horse
 Husk:
   ==: org.bukkit.inventory.ItemStack
@@ -171,7 +171,7 @@ Mule:
   meta:
     ==: ItemMeta
     meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2LQU+DMBhAP41LkPgzvJK0KwU5qkzXZS26jTF6g63b6NrNMDDCr/InytHjy3vPBXDhYXlqjfmoL/vKKAdu2Q4eSYTGJPBDrxxHxPMppd5TifZeSSmmoY/DAhcuuMP0peqmUtd7cBr107S1uroAcOPAaF2YVsGv6mZIbo5ot5mZbceCgVdLZBKmv0J2XnflKwuYHfz0OZh30b+WNkVGTU5mR3n+bEu7RnOyMGq6wFubfgs9oTxmfrI69Dw+EN6/aBFvkegZTTJRiWyC5fuE5j3DScz9XL+deJxSaVMkrNS8z4dXWpmlY6EZ4fpU7Tc4AnDgThRWwWh6qa8K4A977f35JgEAAA==
+    internal: H4sIAAAAAAAAAE2PwU6DQBRFnyYmSPwMtyTDwEBZdGEsbYcUkBaxw67AINAZbFqohe/yAyVx4/Lknrs4KoAKT7tjL8Tb+ausBVfgnhbwjDDGCJeF5hDT0kzTwVo2yywts60Zd4iN9ByroE6nEz93Nb88gtLxW9ef+UUFgDsFHpKD6Dn88MFD6b5Cxd4T+UCtieMdEiFtTjZtkyF7pRaV075+sTaD888l3eGDCGZ4VdpGfSYTtDG2gq+3ei7frwH26mBFh3DxScJ4KVJJTYbd72CMRiaThuFE+qM7BHFV++Py6I9C+k1Egj/3xkbR+HFVBQvXYNJF4YoR2upOGc3nUwH8Ar7AeVIcAQAA
     skull-owner: Horse
 Ocelot:
   ==: org.bukkit.inventory.ItemStack
