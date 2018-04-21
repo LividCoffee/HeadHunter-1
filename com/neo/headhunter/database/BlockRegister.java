@@ -25,7 +25,7 @@ public final class BlockRegister {
 	public void placeBlock(Location loc, OfflinePlayer placer, BlockType type) {
 		try {
 			placeBlock.setString(1, Utils.parseLocation(loc));
-			placeBlock.setString(2, placer.getUniqueId().toString());
+			placeBlock.setString(2, placer == null ? null : placer.getUniqueId().toString());
 			placeBlock.setString(3, type.toString());
 			placeBlock.executeUpdate();
 		} catch(SQLException e) {

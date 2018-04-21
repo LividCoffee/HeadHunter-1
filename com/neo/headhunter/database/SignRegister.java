@@ -56,11 +56,11 @@ public final class SignRegister {
 		return result;
 	}
 	
-	public void placeWantedSign(Location loc, int index) {
+	public void placeWantedSign(Location loc, int index, Location headLoc) {
 		try {
 			placeWantedSign.setString(1, Utils.parseLocation(loc));
 			placeWantedSign.setInt(2, index);
-			placeWantedSign.setString(3, null);
+			placeWantedSign.setString(3, headLoc == null ? null : Utils.parseLocation(headLoc));
 			placeWantedSign.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();

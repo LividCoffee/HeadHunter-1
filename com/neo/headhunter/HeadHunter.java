@@ -1,7 +1,7 @@
 package com.neo.headhunter;
 
 import com.neo.headhunter.command.MainExecutor;
-import com.neo.headhunter.database.HHDB;
+import com.neo.headhunter.database.*;
 import com.neo.headhunter.factory.DropFactory;
 import com.neo.headhunter.factory.HeadFactory;
 import com.neo.headhunter.factory.RateFactory;
@@ -10,23 +10,30 @@ import com.neo.headhunter.listener.support.ListenerMinigames;
 import com.neo.headhunter.listener.support.ListenerMobStacker;
 import com.neo.headhunter.mgmt.CooldownManager;
 import com.neo.headhunter.mgmt.SignManager;
+import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Accessor;
 import com.neo.headhunter.util.config.Settings;
+import com.neo.headhunter.util.item.BlockType;
 import com.neo.headhunter.util.message.Message;
 import com.neo.headhunter.util.mob.MobLibrary;
 import com.neo.headhunter.util.mob.MobSettings;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class HeadHunter extends JavaPlugin {
@@ -47,10 +54,7 @@ public class HeadHunter extends JavaPlugin {
 	private HeadFactory headFactory;
 	
 	@Override
-    public void onEnable() {
-		prepareFiles();
-		
-	    //Hard dependencies
+    public void onEnable() {//Hard dependencies
 	    try {
 		    economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
 	    } catch (Exception e) {
@@ -59,13 +63,12 @@ public class HeadHunter extends JavaPlugin {
 		    return;
 	    }
 	    
-	    //Create database
+	    //Create database and refresh plugin directory
 		this.hhdb = new HHDB(this);
-	
-	    //Force default configuration files
-	    access(Utils.MDB).forceDefaultConfig();
-	
-	    //Load settings
+		prepareFiles();
+		removeOldFiles();
+		
+		//Load settings
 	    Settings.load(this);
 	    MobSettings.load(this);
 	    Message.load(this);
@@ -90,12 +93,12 @@ public class HeadHunter extends JavaPlugin {
 		this.cooldownManager.runTaskTimer(this, 0L, 20L);
 		this.signManager.runTaskTimer(this, 0L, 40L);
         
-        Bukkit.getConsoleSender().sendMessage("§a" + getTag() + " has been Enabled!");
+        Bukkit.getConsoleSender().sendMessage(getTag() + " has been Enabled!");
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getConsoleSender().sendMessage("§a" + getTag() + " has been Disabled!");
+        Bukkit.getConsoleSender().sendMessage(getTag() + " has been Disabled!");
     }
     
     private void prepareFiles() {
@@ -144,6 +147,84 @@ public class HeadHunter extends JavaPlugin {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+    }
+    
+    private void removeOldFiles() {
+	    BountyRegister bountyRegister = hhdb.getBountyRegister();
+	    BlockRegister blockRegister = hhdb.getBlockRegister();
+	    HeadRegister headRegister = hhdb.getHeadRegister();
+	    SignRegister signRegister = hhdb.getSignRegister();
+	    
+	    //handle bounties.yml and offers.yml
+	    File oldBountyFile = new File(getDataFolder() + File.separator + "bounties.yml");
+	    int state = 0;
+	    do {
+	    	if(oldBountyFile.exists()) {
+			    FileConfiguration config = YamlConfiguration.loadConfiguration(oldBountyFile);
+			    for(String targetID : config.getKeys(false)) {
+			    	for(String hunterID : config.getConfigurationSection(targetID).getKeys(false)) {
+			    		OfflinePlayer hunter = PlayerUtils.getPlayer(UUID.fromString(hunterID));
+					    OfflinePlayer target = PlayerUtils.getPlayer(UUID.fromString(targetID));
+					    double amount = config.getDouble(targetID + "." + hunterID);
+					    if(hunter != null && target != null && amount > 0)
+					    	bountyRegister.addBounty(hunter, target, amount);
+				    }
+			    }
+			    if(!oldBountyFile.delete())
+				    getLogger().log(Level.WARNING, "HeadHunter could not delete old bounties file");
+			    state++;
+		    }
+		    else
+			    oldBountyFile = new File(getDataFolder() + File.separator + "offers.yml");
+		    state++;
+	    } while(state < 2);
+	    
+	    //handle heads.yml
+	    File oldHeadFile = new File(getDataFolder() + File.separator + "heads.yml");
+	    if(oldHeadFile.exists()) {
+	    	FileConfiguration config = YamlConfiguration.loadConfiguration(oldHeadFile);
+	    	for(String key : config.getKeys(false)) {
+	    		Location loc = Utils.readLocation(key);
+	    		ItemStack head = config.getItemStack(key);
+	    		blockRegister.placeBlock(loc, null, BlockType.HEAD);
+	    		headRegister.placeHead(loc, head);
+		    }
+		    if(!oldHeadFile.delete())
+		    	getLogger().log(Level.WARNING, "HeadHunter could not delete old heads file");
+	    }
+	    
+	    //handle records.yml
+	    File oldRecordFile = new File(getDataFolder() + File.separator + "records.yml");
+	    if(oldRecordFile.exists() && !oldRecordFile.delete())
+		    getLogger().log(Level.WARNING, "HeadHunter could not delete old records file");
+	    
+	    //handle signs.yml
+	    File oldSignFile = new File(getDataFolder() + File.separator + "signs.yml");
+	    if(oldSignFile.exists()) {
+	    	FileConfiguration config = YamlConfiguration.loadConfiguration(oldSignFile);
+	    	if(config.contains("selling")) {
+			    ConfigurationSection section = config.getConfigurationSection("selling");
+			    for(String key : section.getKeys(false)) {
+			    	Location loc = Utils.readLocation(key);
+			    	OfflinePlayer placer = PlayerUtils.getPlayer(UUID.fromString(section.getString(key + ".owner")));
+			    	blockRegister.placeBlock(loc, placer, BlockType.SELLING_SIGN);
+			    	signRegister.placeSellingSign(loc);
+			    }
+		    }
+		    if(config.contains("wanted")) {
+			    ConfigurationSection section = config.getConfigurationSection("wanted");
+			    for(String key : section.getKeys(false)) {
+				    Location loc = Utils.readLocation(key);
+				    OfflinePlayer placer = PlayerUtils.getPlayer(UUID.fromString(section.getString(key + ".owner")));
+				    int index = section.getInt(key + ".list-index");
+				    Location headLoc = Utils.readLocation(section.getString(key + ".head-location"));
+				    blockRegister.placeBlock(loc, placer, BlockType.WANTED_SIGN);
+				    signRegister.placeWantedSign(loc, index, headLoc);
+			    }
+		    }
+	    	if(!oldSignFile.delete())
+			    getLogger().log(Level.WARNING, "HeadHunter could not delete old signs file");
+	    }
     }
     
     private void registerListeners() {
