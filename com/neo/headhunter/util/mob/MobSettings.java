@@ -1,8 +1,6 @@
 package com.neo.headhunter.util.mob;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.config.Accessor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -30,8 +28,7 @@ public final class MobSettings {
     private static List<EntityDamageEvent.DamageCause> preventDeathReasons;
 
     public static void load(HeadHunter plugin) {
-        Accessor ax = plugin.access(Utils.CFG);
-        FileConfiguration access = ax.getConfig();
+        FileConfiguration access = plugin.getConfig();
         hoardMode = access.getBoolean("mobhunter.hoard-mode", false);
         
         drop_anyCause = access.getBoolean("mobhunter.drop.any-cause", false);

@@ -2,7 +2,7 @@ package com.neo.headhunter.util.message;
 
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.config.Accessor;
+import com.neo.headhunter.util.config.AuxResource;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public enum Message {
@@ -36,17 +36,18 @@ public enum Message {
 	}
 	
 	public static void save(HeadHunter plugin) {
-		Accessor access = plugin.access(Utils.MSG);
-		access.resetConfig();
-		FileConfiguration config = access.getConfig();
+		AuxResource aux = plugin.getAuxiliary(Utils.MSG);
+		aux.resetConfig();
+		FileConfiguration config = aux.getConfig();
 		for(Message msg : Message.values())
 			config.set(msg.toString(), msg.s);
-		access.saveConfig();
+		aux.saveConfig();
 	}
 	
 	public static void load(HeadHunter plugin) {
-		Accessor access = plugin.access(Utils.MSG);
-		FileConfiguration config = access.getConfig();
+		AuxResource aux = plugin.getAuxiliary(Utils.MSG);
+		aux.resetConfig();
+		FileConfiguration config = aux.getConfig();
 		for(String key : config.getKeys(false)) {
 			try {
 				Message.valueOf(key).s = config.getString(key);
@@ -54,7 +55,7 @@ public enum Message {
 				//Ignore invalid options
 			}
 		}
-		access.saveConfig();
+		aux.saveConfig();
 	}
 	
 	public String f() {

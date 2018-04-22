@@ -1,7 +1,6 @@
 package com.neo.headhunter.util.config;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.util.Utils;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public final class Settings {
@@ -38,74 +37,73 @@ public final class Settings {
             enchant_looting_map;
 
     public static void load(HeadHunter plugin) {
-        Accessor ax = plugin.access(Utils.CFG);
-        FileConfiguration access = ax.getConfig();
-        hoardMode = access.getBoolean("hoard-mode", false);
-        usePercentage = access.getBoolean("use-percentage", true);
-        ignoreWorlds = access.getBoolean("ignore-worlds", true);
+        FileConfiguration config = plugin.getConfig();
+        hoardMode = config.getBoolean("hoard-mode", false);
+        usePercentage = config.getBoolean("use-percentage", true);
+        ignoreWorlds = config.getBoolean("ignore-worlds", true);
 
-        sell_rate = access.getDouble("sell.rate", 10.0);
-        sell_notify = access.getBoolean("sell.notify", true);
-        sell_broadcast = access.getBoolean("sell.broadcast", true);
-        sell_console = access.getBoolean("sell.console", false);
-        sell_signOnly = access.getBoolean("sell.sign-only", false);
+        sell_rate = config.getDouble("sell.rate", 10.0);
+        sell_notify = config.getBoolean("sell.notify", true);
+        sell_broadcast = config.getBoolean("sell.broadcast", true);
+        sell_console = config.getBoolean("sell.console", false);
+        sell_signOnly = config.getBoolean("sell.sign-only", false);
 
-        head_value_useBalance = access.getBoolean("head.value.use-balance", true);
-        head_value_useBounty = access.getBoolean("head.value.use-bounty", true);
-        head_value_cumulative = access.getBoolean("head.value.cumulative", false);
-        head_value_minWorth = access.getDouble("head.value.min-worth", 0.0);
-        head_format_title = access.getString("head.format.title", "&a{TARGET}''s Head");
-        head_format_worth = access.getString("head.format.worth", "&eSell Price:&a ${VALUE}");
-        head_format_worthless = access.getString("head.format.worthless", "&eSell Price: &cWorthless");
+        head_value_useBalance = config.getBoolean("head.value.use-balance", true);
+        head_value_useBounty = config.getBoolean("head.value.use-bounty", true);
+        head_value_cumulative = config.getBoolean("head.value.cumulative", false);
+        head_value_minWorth = config.getDouble("head.value.min-worth", 0.0);
+        head_format_title = config.getString("head.format.title", "&a{TARGET}''s Head");
+        head_format_worth = config.getString("head.format.worth", "&eSell Price:&a ${VALUE}");
+        head_format_worthless = config.getString("head.format.worthless", "&eSell Price: &cWorthless");
 
-        drop_chance = access.getInt("drop.chance", 100);
-        drop_onlyWithBounty = access.getBoolean("drop.only-with-bounty", false);
-        drop_fireTick = access.getBoolean("drop.fire-tick", false);
-        drop_anyCause = access.getBoolean("drop.any-cause", false);
-        drop_defaultCooldown = access.getLong("drop.default-cooldown", 0);
+        drop_chance = config.getInt("drop.chance", 100);
+        drop_onlyWithBounty = config.getBoolean("drop.only-with-bounty", false);
+        drop_fireTick = config.getBoolean("drop.fire-tick", false);
+        drop_anyCause = config.getBoolean("drop.any-cause", false);
+        drop_defaultCooldown = config.getLong("drop.default-cooldown", 0);
         
-        drop_weapon_swords = access.getBoolean("drop.weapon.swords", true);
-        drop_weapon_bows = access.getBoolean("drop.weapon.bows", true);
-	    drop_weapon_axes = access.getBoolean("drop.weapon.axes", true);
-	    drop_weapon_pickaxes = access.getBoolean("drop.weapon.pickaxes", false);
-	    drop_weapon_spades = access.getBoolean("drop.weapon.spades", false);
-	    drop_weapon_hoes = access.getBoolean("drop.weapon.hoes", false);
-	    drop_weapon_rods = access.getBoolean("drop.weapon.rods", false);
-	    drop_weapon_fists = access.getBoolean("drop.weapon.fists", false);
+        drop_weapon_swords = config.getBoolean("drop.weapon.swords", true);
+        drop_weapon_bows = config.getBoolean("drop.weapon.bows", true);
+	    drop_weapon_axes = config.getBoolean("drop.weapon.axes", true);
+	    drop_weapon_pickaxes = config.getBoolean("drop.weapon.pickaxes", false);
+	    drop_weapon_spades = config.getBoolean("drop.weapon.spades", false);
+	    drop_weapon_hoes = config.getBoolean("drop.weapon.hoes", false);
+	    drop_weapon_rods = config.getBoolean("drop.weapon.rods", false);
+	    drop_weapon_fists = config.getBoolean("drop.weapon.fists", false);
 
-        bounty_listSize = access.getInt("bounty.list-size", -1);
-        bounty_minimum = access.getDouble("bounty.minimum", 20.0);
-        bounty_godfatherMode = access.getBoolean("bounty.godfather-mode", false);
-        bounty_notify = access.getBoolean("bounty.notify", true);
-        bounty_broadcast = access.getBoolean("bounty.broadcast", true);
-	    bounty_console = access.getBoolean("bounty.console", false);
+        bounty_listSize = config.getInt("bounty.list-size", -1);
+        bounty_minimum = config.getDouble("bounty.minimum", 20.0);
+        bounty_godfatherMode = config.getBoolean("bounty.godfather-mode", false);
+        bounty_notify = config.getBoolean("bounty.notify", true);
+        bounty_broadcast = config.getBoolean("bounty.broadcast", true);
+	    bounty_console = config.getBoolean("bounty.console", false);
 
-        sign_selling_1 = access.getString("sign.selling.1", "--&4&lSell Heads&r--");
-        sign_selling_2 = access.getString("sign.selling.2", "Right-click to");
-        sign_selling_3 = access.getString("sign.selling.3", "sell heads");
-        sign_selling_4 = access.getString("sign.selling.4", "---------------");
+        sign_selling_1 = config.getString("sign.selling.1", "--&4&lSell Heads&r--");
+        sign_selling_2 = config.getString("sign.selling.2", "Right-click to");
+        sign_selling_3 = config.getString("sign.selling.3", "sell heads");
+        sign_selling_4 = config.getString("sign.selling.4", "---------------");
 
-        sign_wanted_1 = access.getString("sign.wanted.1", "----&4&lWanted&r----");
-        sign_wanted_2 = access.getString("sign.wanted.2", "{TARGET}");
-        sign_wanted_3 = access.getString("sign.wanted.3", "${VALUE}");
-        sign_wanted_4 = access.getString("sign.wanted.4", "---------------");
+        sign_wanted_1 = config.getString("sign.wanted.1", "----&4&lWanted&r----");
+        sign_wanted_2 = config.getString("sign.wanted.2", "{TARGET}");
+        sign_wanted_3 = config.getString("sign.wanted.3", "${VALUE}");
+        sign_wanted_4 = config.getString("sign.wanted.4", "---------------");
 
-        enchant_looting_enabled = access.getBoolean("enchant.looting.enabled", false);
-        enchant_looting_map = access.getString("enchant.looting.level-multiplier-map", "1:1.1/2:1.3/3:1.5");
-        enchant_custom_enabled = access.getBoolean("enchant.custom.enabled", false);
-        enchant_custom_chance = access.getInt("enchant.custom.chance", 10);
-        enchant_custom_minLevels = access.getInt("enchant.custom.min-levels", 20);
-        enchant_custom_maxLevels = access.getInt("enchant.custom.max-levels", 30);
-        enchant_custom_maxOthers = access.getInt("enchant.custom.max-other-enchantments", 2);
-        enchant_custom_allowedBows = access.getBoolean("enchant.custom.allowed-bows", true);
-        enchant_custom_allowedTools = access.getBoolean("enchant.custom.allowed-tools", false);
-        enchant_custom_dropRate = access.getDouble("enchant.custom.drop-rate", -1);
+        enchant_looting_enabled = config.getBoolean("enchant.looting.enabled", false);
+        enchant_looting_map = config.getString("enchant.looting.level-multiplier-map", "1:1.1/2:1.3/3:1.5");
+        enchant_custom_enabled = config.getBoolean("enchant.custom.enabled", false);
+        enchant_custom_chance = config.getInt("enchant.custom.chance", 10);
+        enchant_custom_minLevels = config.getInt("enchant.custom.min-levels", 20);
+        enchant_custom_maxLevels = config.getInt("enchant.custom.max-levels", 30);
+        enchant_custom_maxOthers = config.getInt("enchant.custom.max-other-enchantments", 2);
+        enchant_custom_allowedBows = config.getBoolean("enchant.custom.allowed-bows", true);
+        enchant_custom_allowedTools = config.getBoolean("enchant.custom.allowed-tools", false);
+        enchant_custom_dropRate = config.getDouble("enchant.custom.drop-rate", -1);
 
-        support_factions_dropWilderness = access.getBoolean("support.factions.drop-wilderness", true);
-        support_factions_dropWarzone = access.getBoolean("support.factions.drop-warzone", false);
-        support_factions_dropSafezone = access.getBoolean("support.factions.drop-safezone", false);
-        support_minigames_dropGame = access.getBoolean("support.minigames.drop-game", false);
-        support_mobstacker_dropEach = access.getBoolean("support.mobstacker.drop-each", true);
+        support_factions_dropWilderness = config.getBoolean("support.factions.drop-wilderness", true);
+        support_factions_dropWarzone = config.getBoolean("support.factions.drop-warzone", false);
+        support_factions_dropSafezone = config.getBoolean("support.factions.drop-safezone", false);
+        support_minigames_dropGame = config.getBoolean("support.minigames.drop-game", false);
+        support_mobstacker_dropEach = config.getBoolean("support.mobstacker.drop-each", true);
     }
 
     public static boolean isHoardMode() {

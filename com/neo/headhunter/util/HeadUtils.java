@@ -1,7 +1,7 @@
 package com.neo.headhunter.util;
 
 import com.neo.headhunter.HeadHunter;
-import com.neo.headhunter.util.config.Accessor;
+import com.neo.headhunter.util.config.AuxResource;
 import com.neo.headhunter.util.config.Settings;
 import com.neo.headhunter.util.item.head.HeadData;
 import com.neo.headhunter.util.item.head.HeadLootData;
@@ -91,9 +91,9 @@ public final class HeadUtils {
 	}
 	
 	public static void saveItemStack(HeadHunter plugin, String key, ItemStack item) {
-		Accessor ax = plugin.access(Utils.TMP);
-		FileConfiguration config = ax.getConfig();
+		AuxResource aux = new AuxResource(plugin, Utils.TMP);
+		FileConfiguration config = aux.getConfig();
 		config.set(key, item);
-		ax.saveConfig();
+		aux.saveConfig();
 	}
 }

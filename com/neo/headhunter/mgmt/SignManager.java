@@ -34,7 +34,6 @@ public final class SignManager extends BukkitRunnable {
 		this.rateFactory = plugin.getRateFactory();
 		
 		this.signLinks = new HashMap<>();
-		//loadSigns();
 	}
 	
 	private void updateSellingSigns() {
@@ -89,60 +88,6 @@ public final class SignManager extends BukkitRunnable {
 		updateSellingSigns();
 		updateWantedSigns();
 	}
-	
-	/*
-	public void saveSellingSigns() {
-		Accessor access = plugin.access(Utils.SGN);
-		access.getConfig().set("selling", null);
-		for(Map.Entry<Location, SellingSign> entry : sellingSigns.entrySet()) {
-			String locTag = Utils.parseLocation(entry.getKey());
-			SellingSign sellingSign = entry.getValue();
-			access.getConfig().set("selling." + locTag + ".owner", sellingSign.getOwner().toString());
-		}
-		access.saveConfig();
-	}
-	
-	public void saveWantedSigns() {
-		Accessor access = plugin.access(Utils.SGN);
-		access.getConfig().set("wanted", null);
-		for(Map.Entry<Location, WantedSign> entry : wantedSigns.entrySet()) {
-			String locTag = Utils.parseLocation(entry.getKey());
-			WantedSign wantedSign = entry.getValue();
-			access.getConfig().set("wanted." + locTag + ".owner", wantedSign.getOwner().toString());
-			access.getConfig().set("wanted." + locTag + ".head-location", Utils.parseLocation(wantedSign.getHeadLocation()));
-			access.getConfig().set("wanted." + locTag + ".list-index", wantedSign.getBountyIndex());
-		}
-		access.saveConfig();
-	}
-	
-	public void loadSigns() {
-		sellingSigns.clear();
-		wantedSigns.clear();
-		Accessor access = plugin.access(Utils.SGN);
-		ConfigurationSection sellingSection = access.getConfig().getConfigurationSection("selling");
-		if(sellingSection != null) {
-			for(String locTag : sellingSection.getKeys(false)) {
-				Location loc = Utils.readLocation(locTag);
-				UUID owner = UUID.fromString(sellingSection.getString(locTag + ".owner"));
-				SellingSign sellingSign = new SellingSign(owner);
-				sellingSigns.put(loc, sellingSign);
-			}
-		}
-		ConfigurationSection wantedSection = access.getConfig().getConfigurationSection("wanted");
-		if(wantedSection != null) {
-			for(String locTag : wantedSection.getKeys(false)) {
-				Location loc = Utils.readLocation(locTag);
-				UUID owner = UUID.fromString(wantedSection.getString(locTag + ".owner"));
-				Location headLoc = Utils.readLocation(wantedSection.getString(locTag + ".head-location"));
-				int index = wantedSection.getInt(locTag + ".list-index");
-				WantedSign wantedSign = new WantedSign(owner);
-				wantedSign.setHeadLocation(headLoc);
-				wantedSign.setBountyIndex(index);
-				wantedSigns.put(loc, wantedSign);
-			}
-		}
-	}
-	*/
 	
 	public void putSignLink(Player p, Location loc) {
 		signLinks.put(p, loc);

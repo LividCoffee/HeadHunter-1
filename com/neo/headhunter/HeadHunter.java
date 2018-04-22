@@ -12,7 +12,7 @@ import com.neo.headhunter.mgmt.CooldownManager;
 import com.neo.headhunter.mgmt.SignManager;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.config.Accessor;
+import com.neo.headhunter.util.config.AuxResource;
 import com.neo.headhunter.util.config.Settings;
 import com.neo.headhunter.util.item.BlockType;
 import com.neo.headhunter.util.message.Message;
@@ -41,6 +41,7 @@ public class HeadHunter extends JavaPlugin {
 	
 	private Economy economy;
 	
+	private Map<String, AuxResource> auxiliary;
 	private HHDB hhdb;
 	
 	private ListenerMinigames listenerMinigames;
@@ -63,10 +64,12 @@ public class HeadHunter extends JavaPlugin {
 		    return;
 	    }
 	    
-	    //Create database and refresh plugin directory
+	    //Refresh plugin directory and database
+		this.auxiliary = new HashMap<>();
 		this.hhdb = new HHDB(this);
 		prepareFiles();
 		removeOldFiles();
+		registerAuxiliary();
 		
 		//Load settings
 	    Settings.load(this);
@@ -227,6 +230,11 @@ public class HeadHunter extends JavaPlugin {
 	    }
     }
     
+    private void registerAuxiliary() {
+		for(String name : Utils.AUX)
+			auxiliary.put(name, new AuxResource(this, name));
+    }
+    
     private void registerListeners() {
 		Listener[] toRegister = {
 				this.listenerMinigames = new ListenerMinigames(),
@@ -281,9 +289,9 @@ public class HeadHunter extends JavaPlugin {
 		return headFactory;
 	}
 	
-	public Accessor access(String fileName) {
-        return new Accessor(this, fileName);
-    }
+	public AuxResource getAuxiliary(String name) {
+		return auxiliary.get(name);
+	}
     
     private String getTag() {
         return getDescription().getName() + " v" + getDescription().getVersion();

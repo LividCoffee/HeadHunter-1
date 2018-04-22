@@ -2,7 +2,7 @@ package com.neo.headhunter.util.mob;
 
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.util.Utils;
-import com.neo.headhunter.util.config.Accessor;
+import com.neo.headhunter.util.config.AuxResource;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
@@ -39,8 +39,7 @@ public final class MobLibrary {
     }
 
     public double getEntityValue(String entityTag) {
-        if(entityTag == null) return 0;
-        return plugin.access(Utils.MOB).getConfig().getDouble(entityTag + ".value");
+        return entityTag == null ? 0 : plugin.getAuxiliary(Utils.MOB).getConfig().getDouble(entityTag + ".value");
     }
 
     public double getEntityValue(LivingEntity entity) {
@@ -48,8 +47,7 @@ public final class MobLibrary {
     }
 
     public int getEntityDropRate(String entityTag) {
-        if(entityTag == null) return 0;
-        return plugin.access(Utils.MOB).getConfig().getInt(entityTag + ".drop-rate");
+        return entityTag == null ? 0 : plugin.getAuxiliary(Utils.MOB).getConfig().getInt(entityTag + ".drop-rate");
     }
 
     public int getEntityDropRate(LivingEntity entity) {
@@ -195,15 +193,15 @@ public final class MobLibrary {
     }
 
     public void loadDefaults() {
-        Accessor ax = plugin.access(Utils.MOB);
-        FileConfiguration config = ax.getConfig();
+	    AuxResource aux = plugin.getAuxiliary(Utils.MOB);
+        FileConfiguration config = aux.getConfig();
         for(String key : ENTITY_TAG_MAP.keySet()) {
             if(!config.contains(key + ".value"))
 	            config.set(key + ".value", 20.0);
             if(!config.contains(key + ".drop-rate"))
 	            config.set(key + ".drop-rate", 100);
         }
-        ax.saveConfig();
+	    aux.saveConfig();
     }
 
     //
@@ -257,8 +255,8 @@ public final class MobLibrary {
     }
 
     private void loadBaseHeads() {
-        Accessor ax = plugin.access(Utils.MDB);
-        FileConfiguration config = ax.getConfig();
+        AuxResource aux = plugin.getAuxiliary(Utils.MDB);
+        FileConfiguration config = aux.getConfig();
         for(String tag : config.getKeys(false))
             BASE_HEAD_MAP.put(tag, config.getItemStack(tag));
     }

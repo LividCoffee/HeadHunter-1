@@ -16,6 +16,7 @@ public final class Utils {
 	public static final String  MOB =   "mobhunter.yml";
 	public static final String  MDB =   "mhdb.yml";
 	public static final String  TMP =   "temp.yml";
+	public static final String[] AUX = new String[] {MSG, MOB, MDB};
 	
 	private static final String DELIM = ":";
 	
