@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class CmdReload {
 	public static boolean run(CommandSender sender, HeadHunter plugin) {
-		plugin.reloadConfig();
+		plugin.reload();
 		Settings.load(plugin);
 		MobSettings.load(plugin);
 		sender.sendMessage(Control.RELOADED.info(plugin.getDescription().getVersion()));

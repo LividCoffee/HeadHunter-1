@@ -249,6 +249,12 @@ public class HeadHunter extends JavaPlugin {
 		for(Listener l : toRegister)
 			Bukkit.getPluginManager().registerEvents(l, this);
     }
+    
+    public void reload() {
+		reloadConfig();
+		for(String name : Utils.AUX)
+			auxiliary.get(name).reloadConfig();
+    }
 	
 	public Economy getEconomy() {
 		return economy;
