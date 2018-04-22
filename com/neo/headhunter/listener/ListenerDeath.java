@@ -1,14 +1,18 @@
 package com.neo.headhunter.listener;
 
 import com.neo.headhunter.HeadHunter;
+import com.neo.headhunter.database.BountyRegister;
+import com.neo.headhunter.event.HeadDropEvent;
 import com.neo.headhunter.factory.DropFactory;
 import com.neo.headhunter.factory.HeadFactory;
 import com.neo.headhunter.util.MetaUtils;
+import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.Settings;
 import com.neo.headhunter.util.item.head.HeadLoot;
 import com.neo.headhunter.util.item.head.HeadLootData;
 import com.neo.headhunter.util.mob.MobSettings;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
@@ -32,6 +36,8 @@ import java.util.Map;
 public final class ListenerDeath implements Listener {
 	private Economy economy;
 	
+	private BountyRegister bountyRegister;
+	
 	private ListenerCombustion listenerCombustion;
 	
 	private DropFactory dropFactory;
@@ -39,6 +45,8 @@ public final class ListenerDeath implements Listener {
 	
 	public ListenerDeath(HeadHunter plugin) {
 		this.economy = plugin.getEconomy();
+		
+		this.bountyRegister = plugin.getHHDB().getBountyRegister();
 		
 		this.listenerCombustion = plugin.getListenerCombustion();
 		
@@ -96,22 +104,34 @@ public final class ListenerDeath implements Listener {
 		}
 		
 		World targetWorld = target.getWorld();
-		if(dropFactory.resolveDrop(hunter, target, weapon)) {
-			HeadLootData lootData = headFactory.createHeadLootData(hunter, target);
-			if(Settings.isDrop_onlyWithBounty() && lootData.getBountyValue() == 0)
-				return;
-			if(!lootData.isMobHead())
-				economy.withdrawPlayer((OfflinePlayer) target, lootData.getWithdraw());
-			HeadLoot loot = headFactory.createHead(hunter, target, lootData);
-			LivingEntity whereToDrop = loot.getWhereToDrop();
-			if(loot.willInsert() && whereToDrop instanceof InventoryHolder) {
-				Inventory inv = ((InventoryHolder) whereToDrop).getInventory();
-				Map<Integer, ItemStack> excess = inv.addItem(loot.getHead());
-				for(ItemStack item : excess.values())
-					whereToDrop.getWorld().dropItemNaturally(whereToDrop.getLocation(), item);
+		double dropChance = dropFactory.getDropChance(hunter, target, weapon);
+		HeadLootData lootData = headFactory.createHeadLootData(hunter, target);
+		HeadLoot loot = headFactory.createHead(hunter, target, lootData);
+		
+		HeadDropEvent hde = new HeadDropEvent(hunter, target, dropChance, lootData, loot);
+		Bukkit.getPluginManager().callEvent(hde);
+		target = hde.getTarget();
+		dropChance = hde.getDropChance();
+		lootData = hde.getLootData();
+		loot = hde.getLoot();
+		
+		if(!hde.isCancelled()) {
+			if (Utils.RANDOM().nextInt(100) < dropChance) {
+				if (Settings.isDrop_onlyWithBounty() && lootData.getBountyValue() == 0)
+					return;
+				if (!lootData.isMobHead()) {
+					economy.withdrawPlayer((OfflinePlayer) target, lootData.getWithdraw());
+					bountyRegister.removeBounty((OfflinePlayer) target);
+				}
+				LivingEntity whereToDrop = loot.getWhereToDrop();
+				if (loot.willInsert() && whereToDrop instanceof InventoryHolder) {
+					Inventory inv = ((InventoryHolder) whereToDrop).getInventory();
+					Map<Integer, ItemStack> excess = inv.addItem(loot.getHead());
+					for (ItemStack item : excess.values())
+						whereToDrop.getWorld().dropItemNaturally(whereToDrop.getLocation(), item);
+				} else
+					targetWorld.dropItemNaturally(target.getLocation(), loot.getHead());
 			}
-			else
-				targetWorld.dropItemNaturally(target.getLocation(), loot.getHead());
 		}
 	}
 }

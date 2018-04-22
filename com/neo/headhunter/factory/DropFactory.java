@@ -40,39 +40,39 @@ public final class DropFactory {
 		this.rateFactory = plugin.getRateFactory();
 	}
 	
-	public boolean resolveDrop(Player hunter, LivingEntity target, ItemStack weapon) {
+	public double getDropChance(Player hunter, LivingEntity target, ItemStack weapon) {
 		if(isNoDrop(target))
-			return false;
+			return 0;
 		if(isMaster(hunter))
-			return true;
+			return 100;
 		if(!worldRegister.isValidDropLocation(target))
-			return false;
+			return 0;
 		
 		if(!isValidDrop_Factions(target))
-			return false;
+			return 0;
 		if(!isValidDrop_Minigames(hunter, target))
-			return false;
+			return 0;
 		if(!isValidDrop_MobStacker(target))
-			return false;
+			return 0;
 		
 		if(!isValidWeapon(weapon))
-			return false;
+			return 0;
 		
 		double finalDropRate;
 		if(target instanceof Player) {
 			if(cooldownManager.isOnCooldown((Player) target))
-				return false;
+				return 0;
 			finalDropRate = rateFactory.getPlayerDropRate(hunter);
 		}
 		else {
 			if(!isAllowedSpawnReason(target))
-				return false;
+				return 0;
 			if(!isAllowedDeathReason(target))
-				return false;
+				return 0;
 			finalDropRate = rateFactory.getMobDropRate(hunter, target);
 		}
 		finalDropRate = alterByEnchantments(finalDropRate, target, weapon);
-		return Utils.RANDOM().nextInt(100) < finalDropRate;
+		return finalDropRate;
 	}
 	
 	private boolean isValidDrop_Factions(LivingEntity target) {
