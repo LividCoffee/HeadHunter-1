@@ -32,6 +32,7 @@ public class AuxResource {
 		return config;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void reloadConfig() {
 		try {
 			boolean overwrite = false;
