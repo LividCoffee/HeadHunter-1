@@ -40,16 +40,18 @@ public final class SignManager extends BukkitRunnable {
 		for(Location signLoc : signRegister.getSellingSigns()) {
 			if (!(signLoc.getBlock().getState() instanceof Sign))
 				return;
-			for (Player p : signLoc.getWorld().getPlayers()) {
-				if (p.getLocation().distance(signLoc) < 100) {
-					String hunterName = p.getName();
-					double rate = rateFactory.getPlayerSellRate(p);
-					p.sendSignChange(signLoc, new String[] {
-							Utils.f(Settings.getSign_selling_1(), hunterName, "", rate, 1),
-							Utils.f(Settings.getSign_selling_2(), hunterName, "", rate, 1),
-							Utils.f(Settings.getSign_selling_3(), hunterName, "", rate, 1),
-							Utils.f(Settings.getSign_selling_4(), hunterName, "", rate, 1)
-					});
+			if(signLoc.getChunk().isLoaded()) {
+				for (Player p : signLoc.getWorld().getPlayers()) {
+					if (p.getLocation().distance(signLoc) < 70) {
+						String hunterName = p.getName();
+						double rate = rateFactory.getPlayerSellRate(p);
+						p.sendSignChange(signLoc, new String[]{
+								Utils.f(Settings.getSign_selling_1(), hunterName, "", rate, 1),
+								Utils.f(Settings.getSign_selling_2(), hunterName, "", rate, 1),
+								Utils.f(Settings.getSign_selling_3(), hunterName, "", rate, 1),
+								Utils.f(Settings.getSign_selling_4(), hunterName, "", rate, 1)
+						});
+					}
 				}
 			}
 		}
@@ -60,25 +62,27 @@ public final class SignManager extends BukkitRunnable {
 		for(Location signLoc : signRegister.getWantedSigns()) {
 			if (!(signLoc.getBlock().getState() instanceof Sign))
 				return;
-			WantedSign sign = signRegister.getWantedSign(signLoc);
-			if(sign != null) {
-				Duplet<UUID, Double> targetBounty = sortedBounties.get(sign.getBountyIndex());
-				OfflinePlayer target = targetBounty == null ? null : PlayerUtils.getPlayer(targetBounty.getT());
-				String targetName = target == null ? "N/A" : target.getName();
-				for (Player p : signLoc.getWorld().getPlayers()) {
-					if (p.getLocation().distance(signLoc) < 100) {
-						String hunterName = p.getName();
-						double value = targetBounty == null ? 0 : targetBounty.getU();
-						p.sendSignChange(signLoc, new String[]{
-								Utils.f(Settings.getSign_wanted_1(), hunterName, targetName, value, 0),
-								Utils.f(Settings.getSign_wanted_2(), hunterName, targetName, value, 0),
-								Utils.f(Settings.getSign_wanted_3(), hunterName, targetName, value, 0),
-								Utils.f(Settings.getSign_wanted_4(), hunterName, targetName, value, 0)
-						});
+			if(signLoc.getChunk().isLoaded()) {
+				WantedSign sign = signRegister.getWantedSign(signLoc);
+				if (sign != null) {
+					Duplet<UUID, Double> targetBounty = sortedBounties.get(sign.getBountyIndex());
+					OfflinePlayer target = targetBounty == null ? null : PlayerUtils.getPlayer(targetBounty.getT());
+					String targetName = target == null ? "N/A" : target.getName();
+					for (Player p : signLoc.getWorld().getPlayers()) {
+						if (p.getLocation().distance(signLoc) < 70) {
+							String hunterName = p.getName();
+							double value = targetBounty == null ? 0 : targetBounty.getU();
+							p.sendSignChange(signLoc, new String[]{
+									Utils.f(Settings.getSign_wanted_1(), hunterName, targetName, value, 1),
+									Utils.f(Settings.getSign_wanted_2(), hunterName, targetName, value, 1),
+									Utils.f(Settings.getSign_wanted_3(), hunterName, targetName, value, 1),
+									Utils.f(Settings.getSign_wanted_4(), hunterName, targetName, value, 1)
+							});
+						}
 					}
+					if (bountyRegister.isHeadUpdateRequired())
+						HeadUtils.updateHead(sign.getHeadLocation(), target == null ? null : targetName);
 				}
-				if (bountyRegister.isHeadUpdateRequired())
-					HeadUtils.updateHead(sign.getHeadLocation(), target == null ? null : targetName);
 			}
 		}
 	}
