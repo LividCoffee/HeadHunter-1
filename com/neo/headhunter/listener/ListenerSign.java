@@ -109,7 +109,7 @@ public final class ListenerSign implements Listener {
 				return;
 			}
 			blockRegister.placeBlock(event.getBlock().getLocation(), p, BlockType.WANTED_SIGN);
-			signRegister.placeWantedSign(event.getBlock().getLocation(), Integer.parseInt(event.getLine(1)) - 1);
+			signRegister.placeWantedSign(event.getBlock().getLocation(), Integer.parseInt(event.getLine(1)) - 1, null);
 			p.sendMessage(Control.WANTED_CREATED.success());
 		}
 	}
