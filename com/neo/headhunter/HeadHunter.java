@@ -55,7 +55,8 @@ public class HeadHunter extends JavaPlugin {
 	private HeadFactory headFactory;
 	
 	@Override
-    public void onEnable() {//Hard dependencies
+    public void onEnable() {
+		//Hard dependencies
 	    try {
 		    economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
 	    } catch (Exception e) {
