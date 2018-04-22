@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 
-public class AuxResource {
+public final class AuxResource {
 	private final Plugin plugin;
 	private final String fileName;
 	private File file;
@@ -32,7 +32,6 @@ public class AuxResource {
 		return config;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void reloadConfig() {
 		try {
 			boolean overwrite = false;
@@ -48,7 +47,7 @@ public class AuxResource {
 			if(resource != null) {
 				//if the plugin JAR contains a resource by the same name
 				plugin.saveResource(fileName, overwrite);
-				defaults = YamlConfiguration.loadConfiguration(resource);
+				defaults = YamlConfiguration.loadConfiguration(file);
 			}
 			
 			config = YamlConfiguration.loadConfiguration(file);

@@ -66,11 +66,9 @@ public class HeadHunter extends JavaPlugin {
 	    }
 	    
 	    //Refresh plugin directory and database
-		this.auxiliary = new HashMap<>();
-		this.hhdb = new HHDB(this);
 		prepareFiles();
+		this.hhdb = new HHDB(this);
 		removeOldFiles();
-		registerAuxiliary();
 		
 		//Load settings
 	    Settings.load(this);
@@ -107,8 +105,12 @@ public class HeadHunter extends JavaPlugin {
     
     private void prepareFiles() {
 		try {
-			if (getDataFolder().mkdir())
-				getLogger().log(Level.INFO, "New HeadHunter plugin directory successfully created");
+			if (!getDataFolder().mkdir()) {
+				getLogger().log(Level.INFO, "New HeadHunter plugin directory could not be created");
+				Bukkit.getConsoleSender().sendMessage("§cHeadHunter could not create a plugin directory! Disabling...");
+				setEnabled(false);
+				return;
+			}
 			
 			File configFile = new File(getDataFolder() + File.separator + Utils.CFG);
 			if (!configFile.exists())
@@ -137,17 +139,18 @@ public class HeadHunter extends JavaPlugin {
 				//ignore config file with correct version
 			}
 			
-			//always replace
-			saveResource(Utils.MDB, true);
-			
 			//create empty 'mobhunter.yml' file
 			File mobFile = new File(getDataFolder() + File.separator + Utils.MOB);
 			if(!mobFile.exists()) {
-				if(mobFile.createNewFile())
-					getLogger().log(Level.INFO, "New HeadHunter file " + Utils.MOB + " successfully created");
-				else
+				if(!mobFile.createNewFile())
 					getLogger().log(Level.SEVERE, "New HeadHunter file " + Utils.MOB + " could not be created");
 			}
+			
+			this.auxiliary = new HashMap<>();
+			registerAuxiliary();
+			
+			//always replace
+			getAuxiliary(Utils.MDB).resetConfig();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

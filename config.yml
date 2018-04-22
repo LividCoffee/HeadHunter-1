@@ -98,7 +98,3 @@ mobhunter:
     minigames:
       drop-game: false
 do-not-change-this-ever: '2.0.0'
-worlds:
-- world
-- world_nether
-- world_the_end
