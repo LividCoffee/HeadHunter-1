@@ -54,9 +54,15 @@ public final class HeadRegister {
 				else
 					result = mobLibrary.getBaseHead(entityTag);
 				SkullMeta meta = (SkullMeta) result.getItemMeta();
-				meta.setOwner(rs.getString(3));
-				meta.setDisplayName(rs.getString(4));
-				meta.setLore(Arrays.asList(rs.getString(5).split("\\Q\n\\E")));
+				String owner = rs.getString(3);
+				if(owner != null)
+					meta.setOwner(owner);
+				String displayName = rs.getString(4);
+				if(displayName != null)
+					meta.setDisplayName(displayName);
+				String lore = rs.getString(5);
+				if(lore != null)
+					meta.setLore(Arrays.asList(lore.split("\\Q\n\\E")));
 				result.setItemMeta(meta);
 				return result;
 			}

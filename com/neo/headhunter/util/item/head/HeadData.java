@@ -5,29 +5,31 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public final class HeadData {
-	private final String owner;
-	private final String displayName;
-	private final String lore;
+	private String owner;
+	private String displayName;
+	private String lore;
 	
 	public HeadData(ItemStack head) {
+		this.owner = null;
+		this.displayName = null;
+		this.lore = null;
 		if(head != null && head.getType() == Material.SKULL_ITEM) {
 			SkullMeta meta = (SkullMeta) head.getItemMeta();
-			this.owner = meta.getOwner();
-			this.displayName = meta.getDisplayName();
-			StringBuilder lore = new StringBuilder();
-			boolean newLine = false;
-			for (String line : meta.getLore()) {
-				if (newLine)
-					lore.append("\n");
-				lore.append(line);
-				newLine = true;
+			if(meta.hasOwner())
+				this.owner = meta.getOwner();
+			if(meta.hasDisplayName())
+				this.displayName = meta.getDisplayName();
+			if(meta.hasLore()) {
+				StringBuilder lore = new StringBuilder();
+				boolean newLine = false;
+				for (String line : meta.getLore()) {
+					if (newLine)
+						lore.append("\n");
+					lore.append(line);
+					newLine = true;
+				}
+				this.lore = lore.toString();
 			}
-			this.lore = lore.toString();
-		}
-		else {
-			this.owner = null;
-			this.displayName = null;
-			this.lore = null;
 		}
 	}
 	

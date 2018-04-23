@@ -56,7 +56,7 @@ public class HeadHunter extends JavaPlugin {
 	
 	@Override
     public void onEnable() {
-		//Hard dependencies
+		//hard dependencies
 	    try {
 		    economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
 	    } catch (Exception e) {
@@ -65,47 +65,51 @@ public class HeadHunter extends JavaPlugin {
 		    return;
 	    }
 	    
-	    //Refresh plugin directory and database
+	    //ordered initialization
 		prepareFiles();
+	 
+		this.cooldownManager = new CooldownManager();
+		this.mobLibrary = new MobLibrary(this);
+		this.rateFactory = new RateFactory(this);
+		
 		this.hhdb = new HHDB(this);
+		
+		this.signManager = new SignManager(this);
+		this.dropFactory = new DropFactory(this);
+		this.headFactory = new HeadFactory(this);
+		
 		removeOldFiles();
 		
-		//Load settings
+		//load settings
 	    Settings.load(this);
 	    MobSettings.load(this);
 	    Message.load(this);
 	    Message.save(this);
-	    
-	    this.cooldownManager = new CooldownManager();
-	    this.mobLibrary = new MobLibrary(this);
-	    this.rateFactory = new RateFactory(this);
-	    this.signManager = new SignManager(this);
-	    this.dropFactory = new DropFactory(this);
-		this.headFactory = new HeadFactory(this);
 	
 		registerListeners();
 		
-	    //Register commands
+	    //register commands
 	    MainExecutor mainExecutor = new MainExecutor(this);
 	    getCommand("hunter").setExecutor(mainExecutor);
 	    getCommand("sellhead").setExecutor(mainExecutor);
 	    getCommand("bounty").setExecutor(mainExecutor);
 	    
-	    //Start timers
+	    //start timers
 		this.cooldownManager.runTaskTimer(this, 0L, 20L);
 		this.signManager.runTaskTimer(this, 0L, 40L);
-        
-        Bukkit.getConsoleSender().sendMessage(getTag() + " has been Enabled!");
+		
+		getLogger().log(Level.INFO, getTag() + " has been Enabled!");
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getConsoleSender().sendMessage(getTag() + " has been Disabled!");
+	    getLogger().log(Level.INFO, getTag() + " has been Disabled!");
     }
     
+    //create plugin directory, refresh config, register auxiliary
     private void prepareFiles() {
 		try {
-			if (!getDataFolder().mkdir()) {
+			if (!getDataFolder().exists() && !getDataFolder().mkdir()) {
 				getLogger().log(Level.INFO, "New HeadHunter plugin directory could not be created");
 				Bukkit.getConsoleSender().sendMessage("§cHeadHunter could not create a plugin directory! Disabling...");
 				setEnabled(false);

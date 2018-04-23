@@ -158,6 +158,8 @@ public final class MobLibrary {
 	    	return "Creeper";
 	    default:
 	    	String owner = meta.getOwner();
+	    	if(owner == null)
+	    		return null;
 	    	switch(owner) {
 		    case "Bat":
 		    case "Horse":

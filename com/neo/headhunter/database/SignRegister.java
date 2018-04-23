@@ -119,7 +119,9 @@ public final class SignRegister {
 					          "location text, bounty_index integer, head_location text," +
 					          "primary key (location)," +
 					          "foreign key (location) references block(location)" +
-					          "on delete cascade)");
+					          "on delete cascade," +
+					          "foreign key (head_location) references block(location)" +
+					          "on delete set null)");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
