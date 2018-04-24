@@ -1,4 +1,4 @@
-package com.neo.headhunter.event;
+package com.neo.headhunter.event.head;
 
 import com.neo.headhunter.util.item.head.HeadLoot;
 import com.neo.headhunter.util.item.head.HeadLootData;

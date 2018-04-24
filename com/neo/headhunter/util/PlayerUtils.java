@@ -1,6 +1,6 @@
 package com.neo.headhunter.util;
 
-import com.neo.headhunter.event.HeadSellEvent;
+import com.neo.headhunter.event.head.HeadSellEvent;
 import com.neo.headhunter.util.config.Settings;
 import com.neo.headhunter.util.general.Triplet;
 import com.neo.headhunter.util.message.Message;

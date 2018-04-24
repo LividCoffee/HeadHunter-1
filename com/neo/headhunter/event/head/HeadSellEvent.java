@@ -1,4 +1,4 @@
-package com.neo.headhunter.event;
+package com.neo.headhunter.event.head;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

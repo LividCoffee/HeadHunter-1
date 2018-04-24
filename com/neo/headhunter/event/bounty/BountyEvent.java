@@ -1,4 +1,4 @@
-package com.neo.headhunter.event;
+package com.neo.headhunter.event.bounty;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

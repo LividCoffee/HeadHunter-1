@@ -2,7 +2,7 @@ package com.neo.headhunter.listener;
 
 import com.neo.headhunter.HeadHunter;
 import com.neo.headhunter.database.BountyRegister;
-import com.neo.headhunter.event.HeadDropEvent;
+import com.neo.headhunter.event.head.HeadDropEvent;
 import com.neo.headhunter.factory.DropFactory;
 import com.neo.headhunter.factory.HeadFactory;
 import com.neo.headhunter.util.MetaUtils;
