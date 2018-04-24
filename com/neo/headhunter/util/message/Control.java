@@ -3,19 +3,19 @@ package com.neo.headhunter.util.message;
 import com.neo.headhunter.util.Utils;
 
 public enum Control {
-	RELOADED            ("&6HeadHunter v%% reloaded."),
-	PLAYERS_ONLY        ("&cThe '%%' command can only be used by players."),
-	WORLD_ADDED         ("&aHeadHunter world %% added."),
-	WORLD_REMOVED       ("&aHeadHunter world %% removed."),
-	WORLD_EXISTS        ("&c%% is already a HeadHunter world."),
-	WORLD_INVALID       ("&c%% is not a HeadHunter world."),
-	WORLD_NULL          ("&c%% is not a registered world."),
-	SIGN_CREATED        ("&aSelling sign created."),
-	SIGN_REMOVED        ("&aSelling sign removed."),
-	WANTED_OPENED       ("&eWanted sign link started. Click a normal skull to finish."),
-	WANTED_LINKED       ("&aWanted sign linked."),
-	WANTED_CREATED      ("&aWanted sign created."),
-	WANTED_REMOVED      ("&aWanted sign removed.");
+	RELOADED            ("HeadHunter v%% reloaded."),
+	PLAYERS_ONLY        ("The '%%' command can only be used by players."),
+	WORLD_ADDED         ("HeadHunter world %% added."),
+	WORLD_REMOVED       ("HeadHunter world %% removed."),
+	WORLD_EXISTS        ("%% is already a HeadHunter world."),
+	WORLD_INVALID       ("%% is not a HeadHunter world."),
+	WORLD_NULL          ("%% is not a registered world."),
+	SIGN_CREATED        ("Selling sign created."),
+	SIGN_REMOVED        ("Selling sign removed."),
+	WANTED_OPENED       ("Wanted sign link started. Click a normal skull to finish."),
+	WANTED_LINKED       ("Wanted sign linked."),
+	WANTED_CREATED      ("Wanted sign created."),
+	WANTED_REMOVED      ("Wanted sign removed.");
 	
 	private String s;
 	
@@ -27,9 +27,9 @@ public enum Control {
 		String result = "§2" + s;
 		for(Object o : args) {
 			if(o == null)
-				result = result.replaceFirst("%%", "§a null §2");
+				result = result.replaceFirst("%%", "§2 null §a");
 			else
-				result = result.replaceFirst("%%", "§a" + o.toString() + "§2");
+				result = result.replaceFirst("%%", "§2" + o.toString() + "§a");
 		}
 		return Utils.color(result);
 	}
