@@ -28,16 +28,6 @@ public class HeadDropEvent extends Event implements Cancellable {
 		this.loot = loot;
 	}
 	
-	@Override
-	public boolean isCancelled() {
-		return cancelled;
-	}
-	
-	@Override
-	public void setCancelled(boolean b) {
-		this.cancelled = b;
-	}
-	
 	public OfflinePlayer getHunter() {
 		return hunter;
 	}
@@ -76,6 +66,16 @@ public class HeadDropEvent extends Event implements Cancellable {
 	
 	public void setLoot(HeadLoot loot) {
 		this.loot = loot;
+	}
+	
+	@Override
+	public boolean isCancelled() {
+		return cancelled;
+	}
+	
+	@Override
+	public void setCancelled(boolean b) {
+		this.cancelled = b;
 	}
 	
 	@Override
