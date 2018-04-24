@@ -10,6 +10,7 @@ import java.util.Random;
 
 public final class Utils {
 	public static final String  VERSION_PATH =  "do-not-change-this-ever";
+	public static final String  MY_UUID = "ca5d84d3-8174-4695-a5ef-40e7dc47a7f9";
 	
 	public static final String  CFG =   "config.yml";
 	public static final String  MSG =   "messages.yml";
