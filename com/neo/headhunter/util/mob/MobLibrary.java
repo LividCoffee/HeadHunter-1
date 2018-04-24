@@ -55,7 +55,7 @@ public final class MobLibrary {
 	    SkullMeta meta = (SkullMeta) head.getItemMeta();
 	    if(meta.hasOwner())
 	    	return meta.getOwner();
-	    return "Skeleton";
+	    return null;
     }
 
     public ItemStack getBaseHead(String entityTag) {
@@ -65,7 +65,7 @@ public final class MobLibrary {
     private void loadDefaults() {
 	    AuxResource aux = plugin.getAuxiliary(Utils.MOB);
         FileConfiguration config = aux.getConfig();
-        for(String key : PROPER_NAMES.keySet()) {
+        for(String key : plugin.getAuxiliary(Utils.MDB).getConfig().getKeys(false)) {
             if(!config.contains(key + ".value"))
 	            config.set(key + ".value", 20.0);
             if(!config.contains(key + ".drop-rate"))

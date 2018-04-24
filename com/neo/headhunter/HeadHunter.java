@@ -107,7 +107,9 @@ public class HeadHunter extends JavaPlugin {
 	    getLogger().log(Level.INFO, getTag() + " has been Disabled!");
     }
     
-    //create plugin directory, refresh config, register auxiliary
+	/**
+	 * Creates plugin directory, refreshes config.yml, registers auxiliary configurations
+	 */
     private void prepareFiles() {
 		try {
 			if (!getDataFolder().exists() && !getDataFolder().mkdir()) {

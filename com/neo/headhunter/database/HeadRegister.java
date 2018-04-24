@@ -33,9 +33,8 @@ public final class HeadRegister {
 			HeadData headData = HeadUtils.getData(head);
 			placeHead.setString(1, Utils.parseLocation(loc));
 			placeHead.setString(2, mobLibrary.getEntityTag(head));
-			placeHead.setString(3, headData.getOwner());
-			placeHead.setString(4, headData.getDisplayName());
-			placeHead.setString(5, headData.getLore());
+			placeHead.setString(3, headData.getDisplayName());
+			placeHead.setString(4, headData.getLore());
 			placeHead.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -54,13 +53,12 @@ public final class HeadRegister {
 				else
 					result = mobLibrary.getBaseHead(entityTag);
 				SkullMeta meta = (SkullMeta) result.getItemMeta();
-				String owner = rs.getString(3);
-				if(owner != null)
-					meta.setOwner(owner);
-				String displayName = rs.getString(4);
+				if(entityTag != null)
+					meta.setOwner(entityTag);
+				String displayName = rs.getString(3);
 				if(displayName != null)
 					meta.setDisplayName(displayName);
-				String lore = rs.getString(5);
+				String lore = rs.getString(4);
 				if(lore != null)
 					meta.setLore(Arrays.asList(lore.split("\\Q\n\\E")));
 				result.setItemMeta(meta);
@@ -76,7 +74,7 @@ public final class HeadRegister {
 		try {
 			Statement s = c.createStatement();
 			s.execute("create table if not exists head (" +
-					          "location text, entity_tag text, owner text, display_name text, lore text," +
+					          "location text, entity_tag text, display_name text, lore text," +
 					          "primary key (location)," +
 					          "foreign key (location) references block(location)" +
 					          "on delete cascade)");
@@ -87,7 +85,7 @@ public final class HeadRegister {
 	
 	private void prepareStatements() {
 		try {
-			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?, ?)");
+			this.placeHead = c.prepareStatement("insert or replace into head values (?, ?, ?, ?)");
 			this.getHead = c.prepareStatement("select * from head where location = ?");
 		} catch(SQLException e) {
 			e.printStackTrace();
