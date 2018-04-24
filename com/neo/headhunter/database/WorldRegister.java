@@ -7,7 +7,6 @@ import org.bukkit.entity.LivingEntity;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public final class WorldRegister {
 	private Connection c;
@@ -24,18 +23,18 @@ public final class WorldRegister {
 	public boolean isValidDropLocation(LivingEntity target) {
 		if(Settings.isIgnoreWorlds())
 			return true;
-		List<UUID> validWorlds = new ArrayList<>();
+		List<String> validWorlds = new ArrayList<>();
 		try {
 			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("select world_id from hunter_world");
+			ResultSet rs = s.executeQuery("select world_name from hunter_world");
 			while(rs.next())
-				validWorlds.add(UUID.fromString(rs.getString(1)));
+				validWorlds.add(rs.getString(1));
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
-		UUID cwid = target.getWorld().getUID();
-		for(UUID wid : validWorlds) {
-			if(wid.equals(cwid))
+		String targetWorldName = target.getWorld().getName();
+		for(String name : validWorlds) {
+			if(name.equals(targetWorldName))
 				return true;
 		}
 		return false;
@@ -45,8 +44,7 @@ public final class WorldRegister {
 		if(world == null)
 			return false;
 		try {
-			addWorld.setString(1, world.getUID().toString());
-			addWorld.setString(2, world.getName());
+			addWorld.setString(1, world.getName());
 			addWorld.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -70,8 +68,8 @@ public final class WorldRegister {
 		try {
 			Statement s = c.createStatement();
 			s.execute("create table if not exists hunter_world (" +
-					          "world_id text, world_name text," +
-					          "primary key (world_id))");
+					          "world_name text," +
+					          "primary key (world_name))");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -79,7 +77,7 @@ public final class WorldRegister {
 	
 	private void prepareStatements() {
 		try {
-			this.addWorld = c.prepareStatement("insert or replace into hunter_world values (?, ?)");
+			this.addWorld = c.prepareStatement("insert or replace into hunter_world values (?)");
 			this.removeWorld = c.prepareStatement("delete from hunter_world where world_name = ?");
 		} catch(SQLException e) {
 			e.printStackTrace();
