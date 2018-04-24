@@ -61,15 +61,29 @@ public final class MobLibrary {
     public ItemStack getBaseHead(String entityTag) {
         return BASE_HEADS.get(entityTag);
     }
+    
+    public boolean isMobHead(ItemStack head) {
+	    if(head == null || head.getType() != Material.SKULL_ITEM)
+		    throw new IllegalArgumentException("head must be of Material SKULL_ITEM");
+	    SkullMeta meta = (SkullMeta) head.getItemMeta();
+	    if(meta.hasOwner()) {
+	    	String owner = meta.getOwner();
+	    	for(String tag : plugin.getAuxiliary(Utils.MDB).getConfig().getKeys(false)) {
+	    		if(tag.equals(owner))
+	    			return true;
+		    }
+	    }
+    	return false;
+    }
 
     private void loadDefaults() {
 	    AuxResource aux = plugin.getAuxiliary(Utils.MOB);
         FileConfiguration config = aux.getConfig();
-        for(String key : plugin.getAuxiliary(Utils.MDB).getConfig().getKeys(false)) {
-            if(!config.contains(key + ".value"))
-	            config.set(key + ".value", 20.0);
-            if(!config.contains(key + ".drop-rate"))
-	            config.set(key + ".drop-rate", 100);
+        for(String tag : plugin.getAuxiliary(Utils.MDB).getConfig().getKeys(false)) {
+            if(!config.contains(tag + ".value"))
+	            config.set(tag + ".value", 20.0);
+            if(!config.contains(tag + ".drop-rate"))
+	            config.set(tag + ".drop-rate", 100);
         }
 	    aux.saveConfig();
     }

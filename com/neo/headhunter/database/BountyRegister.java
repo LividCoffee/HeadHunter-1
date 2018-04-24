@@ -1,8 +1,14 @@
 package com.neo.headhunter.database;
 
+import com.neo.headhunter.event.bounty.BountyAddEvent;
+import com.neo.headhunter.event.bounty.BountyRemoveAllEvent;
+import com.neo.headhunter.event.bounty.BountyRemoveByDeathEvent;
+import com.neo.headhunter.event.bounty.BountyRemoveEvent;
 import com.neo.headhunter.util.PlayerUtils;
 import com.neo.headhunter.util.general.MappedList;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.UUID;
@@ -88,6 +94,14 @@ public final class BountyRegister {
 	 */
 	public void addBounty(OfflinePlayer hunter, OfflinePlayer target, double amount) {
 		try {
+			BountyAddEvent bae = new BountyAddEvent(hunter, target, amount);
+			Bukkit.getPluginManager().callEvent(bae);
+			if(bae.isCancelled())
+				return;
+			hunter = bae.getPlayer() != null ? bae.getPlayer() : hunter;
+			target = bae.getTarget();
+			amount = bae.getAmount();
+			
 			addBounty.setString(1, hunter.getUniqueId().toString());
 			addBounty.setString(2, target.getUniqueId().toString());
 			addBounty.setDouble(3, getBounty(hunter, target) + amount);
@@ -102,9 +116,13 @@ public final class BountyRegister {
 	 * @param target The target associated with these bounties
 	 * @return The total amount these bounties were worth before removal
 	 */
-	public double removeBounty(OfflinePlayer target) {
+	public double removeAllBounties(Player killer, OfflinePlayer target) {
 		try {
 			double previous = getTotalBounty(target);
+			
+			BountyRemoveByDeathEvent brbde = new BountyRemoveByDeathEvent(killer, target, previous);
+			Bukkit.getPluginManager().callEvent(brbde);
+			
 			removeBountyTarget.setString(1, target.getUniqueId().toString());
 			removeBountyTarget.executeUpdate();
 			return previous;
@@ -123,6 +141,14 @@ public final class BountyRegister {
 	public double removeBounty(OfflinePlayer hunter, OfflinePlayer target) {
 		try {
 			double previous = getBounty(hunter, target);
+			
+			BountyRemoveAllEvent brae = new BountyRemoveAllEvent(hunter, target, previous);
+			Bukkit.getPluginManager().callEvent(brae);
+			if(brae.isCancelled())
+				return previous;
+			hunter = brae.getPlayer() != null ? brae.getPlayer() : hunter;
+			target = brae.getTarget();
+			
 			removeBountySingle.setString(1, hunter.getUniqueId().toString());
 			removeBountySingle.setString(2, target.getUniqueId().toString());
 			removeBountySingle.executeUpdate();
@@ -150,6 +176,15 @@ public final class BountyRegister {
 					return ERR_EXIST;
 				if(amount > previous)
 					return ERR_REMOVE_AMOUNT;
+				
+				BountyRemoveEvent bre = new BountyRemoveEvent(hunter, target, previous);
+				Bukkit.getPluginManager().callEvent(bre);
+				if(bre.isCancelled())
+					return previous;
+				hunter = bre.getPlayer() != null ? bre.getPlayer() : hunter;
+				target = bre.getTarget();
+				amount = bre.getAmount();
+				
 				removeBountyAmount.setString(1, hunter.getUniqueId().toString());
 				removeBountyAmount.setString(2, target.getUniqueId().toString());
 				removeBountyAmount.setDouble(3, amount);

@@ -1,13 +1,12 @@
 package com.neo.headhunter.event.bounty;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 public class BountyRemoveEvent extends BountyEvent {
 	private double amount;
 	
-	public BountyRemoveEvent(Player hunter, OfflinePlayer target, double amount) {
-		super(hunter, target);
+	public BountyRemoveEvent(OfflinePlayer hunter, OfflinePlayer target, double amount) {
+		super(hunter.getPlayer(), target);
 		
 		this.amount = amount;
 	}

@@ -121,7 +121,7 @@ public final class ListenerDeath implements Listener {
 					return;
 				if (!lootData.isMobHead()) {
 					economy.withdrawPlayer((OfflinePlayer) target, lootData.getWithdraw());
-					bountyRegister.removeBounty((OfflinePlayer) target);
+					bountyRegister.removeAllBounties(hunter, (OfflinePlayer) target);
 				}
 				LivingEntity whereToDrop = loot.getWhereToDrop();
 				if (loot.willInsert() && whereToDrop instanceof InventoryHolder) {
