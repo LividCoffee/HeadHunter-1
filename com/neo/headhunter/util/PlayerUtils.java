@@ -18,6 +18,11 @@ import java.util.UUID;
 
 public final class PlayerUtils {
 	public static boolean sellHeads(Economy economy, Player p, boolean inventory, boolean fromSign) {
+		if(Settings.isHoardMode()) {
+			p.sendMessage(Message.HOARD_MODE.f());
+			return false;
+		}
+		
 		HeadSellEvent hse = new HeadSellEvent(p, inventory, fromSign);
 		Bukkit.getPluginManager().callEvent(hse);
 		p = hse.getPlayer();
