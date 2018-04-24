@@ -32,7 +32,7 @@ public final class HeadRegister {
 				return;
 			HeadData headData = HeadUtils.getData(head);
 			placeHead.setString(1, Utils.parseLocation(loc));
-			placeHead.setString(2, mobLibrary.getTagFromHead(head));
+			placeHead.setString(2, mobLibrary.getEntityTag(head));
 			placeHead.setString(3, headData.getOwner());
 			placeHead.setString(4, headData.getDisplayName());
 			placeHead.setString(5, headData.getLore());

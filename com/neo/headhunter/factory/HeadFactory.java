@@ -46,8 +46,9 @@ public final class HeadFactory {
 		ItemStack baseHead;
 		String targetName, stackName, stackLore;
 		if(data.isMobHead()) {
-			baseHead = mobLibrary.getBaseHead(target);
-			targetName = mobLibrary.getEntityName(target);
+			String entityTag = mobLibrary.getEntityTag(target);
+			baseHead = mobLibrary.getBaseHead(entityTag);
+			targetName = mobLibrary.getEntityName(entityTag);
 			stackName = MobSettings.getHead_format_title();
 			if(headValue == 0)
 				stackLore = MobSettings.getHead_format_worthless();

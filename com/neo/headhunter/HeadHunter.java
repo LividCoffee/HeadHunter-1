@@ -6,6 +6,7 @@ import com.neo.headhunter.factory.DropFactory;
 import com.neo.headhunter.factory.HeadFactory;
 import com.neo.headhunter.factory.RateFactory;
 import com.neo.headhunter.listener.*;
+import com.neo.headhunter.listener.operator.ListenerEntity;
 import com.neo.headhunter.listener.support.ListenerMinigames;
 import com.neo.headhunter.listener.support.ListenerMobStacker;
 import com.neo.headhunter.mgmt.CooldownManager;
@@ -251,7 +252,8 @@ public class HeadHunter extends JavaPlugin {
 				this.listenerCombustion = new ListenerCombustion(),
 				new ListenerHelper(this),
 				new ListenerDeath(this),
-				new ListenerSign(this)
+				new ListenerSign(this),
+				new ListenerEntity(this)
 		};
 		for(Listener l : toRegister)
 			Bukkit.getPluginManager().registerEvents(l, this);
