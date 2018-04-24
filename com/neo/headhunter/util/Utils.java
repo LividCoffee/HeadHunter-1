@@ -24,8 +24,8 @@ public final class Utils {
 	private static final Random RANDOM = new Random(System.currentTimeMillis());
 	
 	public static String f(String source, String hunter, String target, double value, int amount) {
-		source = source.replace("{HUNTER}", hunter);
-		source = source.replace("{TARGET}", target);
+		source = source.replace("{HUNTER}", hunter == null ? "N/A" : hunter);
+		source = source.replace("{TARGET}", target == null ? "N/A" : target);
 		source = source.replace("{VALUE}", Utils.toMoney(value));
 		source = source.replace("{AMOUNT}", String.valueOf(amount));
 		return Utils.color(source);

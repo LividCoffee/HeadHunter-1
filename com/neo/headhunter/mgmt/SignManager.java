@@ -80,8 +80,10 @@ public final class SignManager extends BukkitRunnable {
 							});
 						}
 					}
-					if (bountyRegister.isHeadUpdateRequired())
+					if (bountyRegister.isHeadUpdateRequired()) {
 						HeadUtils.updateHead(sign.getHeadLocation(), target == null ? null : targetName);
+						bountyRegister.setHeadUpdateRequired(false);
+					}
 				}
 			}
 		}
