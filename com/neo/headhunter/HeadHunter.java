@@ -23,6 +23,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,9 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class HeadHunter extends JavaPlugin {
@@ -55,6 +54,8 @@ public class HeadHunter extends JavaPlugin {
 	private DropFactory dropFactory;
 	private HeadFactory headFactory;
 	
+	private Set<String> tempHunterWorlds;
+	
 	@Override
     public void onEnable() {
 		//hard dependencies
@@ -67,6 +68,7 @@ public class HeadHunter extends JavaPlugin {
 	    }
 	    
 	    //ordered initialization
+		this.tempHunterWorlds = new HashSet<>();
 		prepareFiles();
 	 
 		this.cooldownManager = new CooldownManager();
@@ -74,6 +76,11 @@ public class HeadHunter extends JavaPlugin {
 		this.rateFactory = new RateFactory(this);
 		
 		this.hhdb = new HHDB(this);
+		for(String worldName : tempHunterWorlds) {
+			World world = Bukkit.getWorld(worldName);
+			if(world != null)
+				this.hhdb.getWorldRegister().addWorld(world);
+		}
 		
 		this.signManager = new SignManager(this);
 		this.dropFactory = new DropFactory(this);
@@ -131,9 +138,22 @@ public class HeadHunter extends JavaPlugin {
 					//current version is incorrect
 					Map<String, Object> oldValues = new HashMap<>();
 					for(Map.Entry<String, Object> entry : config.getValues(true).entrySet()) {
-						if(!(entry.getValue() instanceof MemorySection))
+						if(!(entry.getValue() instanceof MemorySection)) //ignore parent paths
 							oldValues.put(entry.getKey(), entry.getValue());
 					}
+					
+					//get old list of valid worlds
+					if(oldValues.containsKey("worlds")) {
+						Object old = oldValues.get("worlds");
+						if(old instanceof Collection) {
+							for(Object o : ((Collection) old)) {
+								if(o instanceof String)
+									tempHunterWorlds.add((String) o);
+							}
+						}
+					}
+					
+					//overwrite old config
 					saveResource(Utils.CFG, true);
 					config = YamlConfiguration.loadConfiguration(configFile);
 					for(String key : config.getKeys(true)) {
