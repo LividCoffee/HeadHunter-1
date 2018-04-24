@@ -85,23 +85,26 @@ public final class DropFactory {
 		boolean mobSafezone = MobSettings.isSupport_factions_dropSafezone();
 		boolean mainWarzone = Settings.isSupport_factions_dropWarzone();
 		boolean mobWarzone = MobSettings.isSupport_factions_dropWarzone();
-		if(Bukkit.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
-			//Factions plugin is MassiveCore Factions
-			com.massivecraft.factions.entity.Faction d = FactionColl.get().getNone();
-			com.massivecraft.factions.entity.Faction s = FactionColl.get().getSafezone();
-			com.massivecraft.factions.entity.Faction w = FactionColl.get().getWarzone();
-			com.massivecraft.factions.entity.Faction f = BoardColl.get().getFactionAt(PS.valueOf(target.getLocation()));
-			if (f.equals(d)) return player ? mainWilderness : mobWilderness;
-			else if (f.equals(s)) return player ? mainSafezone : mobSafezone;
-			else if (f.equals(w)) return player ? mainWarzone : mobWarzone;
-		}
-		else {
-			//Factions plugin is FactionsUUID
-			FLocation loc = new FLocation(target.getLocation());
-			com.massivecraft.factions.Faction f = Board.getInstance().getFactionAt(loc);
-			if(f.isWilderness()) return player ? mainWilderness : mobWilderness;
-			else if(f.isSafeZone()) return player ? mainSafezone : mobSafezone;
-			else if(f.isWarZone()) return player ? mainWarzone : mobWarzone;
+		if(Utils.isPluginEnabled("Factions")) {
+			if (Bukkit.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
+				//Factions plugin is MassiveCore Factions
+				com.massivecraft.factions.entity.Faction d = FactionColl.get().getNone();
+				com.massivecraft.factions.entity.Faction s = FactionColl.get().getSafezone();
+				com.massivecraft.factions.entity.Faction w = FactionColl.get().getWarzone();
+				com.massivecraft.factions.entity.Faction f = BoardColl.get().getFactionAt(PS.valueOf(target.getLocation()));
+				if (f.equals(d)) return player ? mainWilderness : mobWilderness;
+				else if (f.equals(s)) return player ? mainSafezone : mobSafezone;
+				else if (f.equals(w)) return player ? mainWarzone : mobWarzone;
+			} else if (Bukkit.getPluginManager().getPlugin("Factions").getDescription().getAuthors().contains("drtshock")) {
+				//Factions plugin is FactionsUUID
+				FLocation loc = new FLocation(target.getLocation());
+				com.massivecraft.factions.Faction f = Board.getInstance().getFactionAt(loc);
+				if (f.isWilderness()) return player ? mainWilderness : mobWilderness;
+				else if (f.isSafeZone()) return player ? mainSafezone : mobSafezone;
+				else if (f.isWarZone()) return player ? mainWarzone : mobWarzone;
+			} else if (Bukkit.getPluginManager().getPlugin("Factions").getDescription().getAuthors().contains("externo6")) {
+				//Factions plugin is FactionsOne -- unable to be supported because of package names
+			}
 		}
 		return true;
 	}
