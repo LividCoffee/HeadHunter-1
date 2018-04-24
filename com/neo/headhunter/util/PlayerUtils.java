@@ -20,7 +20,7 @@ public final class PlayerUtils {
 	public static boolean sellHeads(Economy economy, Player p, boolean inventory, boolean fromSign) {
 		HeadSellEvent hse = new HeadSellEvent(p, inventory, fromSign);
 		Bukkit.getPluginManager().callEvent(hse);
-		p = hse.getHunter();
+		p = hse.getPlayer();
 		inventory = hse.isInventory();
 		fromSign = hse.isFromSign();
 		
