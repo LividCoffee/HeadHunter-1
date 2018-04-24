@@ -27,9 +27,9 @@ public enum Control {
 		String result = "§2" + s;
 		for(Object o : args) {
 			if(o == null)
-				result = result.replaceFirst("%%", "§2 null §a");
+				result = result.replaceFirst("%%", "§a null §2");
 			else
-				result = result.replaceFirst("%%", "§2" + o.toString() + "§a");
+				result = result.replaceFirst("%%", "§a" + o.toString() + "§2");
 		}
 		return Utils.color(result);
 	}
