@@ -27,7 +27,7 @@ public final class WorldRegister {
 	
 	public boolean addWorld(World world) {
 		if(world == null)
-			return false;
+			throw new IllegalArgumentException("world cannot be null");
 		if(isHunterWorld(world))
 			return false;
 		try {
@@ -41,7 +41,7 @@ public final class WorldRegister {
 	
 	public boolean removeWorld(World world) {
 		if(world == null)
-			return false;
+			throw new IllegalArgumentException("world cannot be null");
 		if(!isHunterWorld(world))
 			return false;
 		try {
@@ -55,7 +55,7 @@ public final class WorldRegister {
 	
 	private boolean isHunterWorld(World world) {
 		if(world == null)
-			return false;
+			throw new IllegalArgumentException("world cannot be null");
 		try {
 			getWorld.setString(1, world.getName());
 			return getWorld.executeQuery().next();
