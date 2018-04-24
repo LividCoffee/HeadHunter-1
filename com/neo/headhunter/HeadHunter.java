@@ -263,8 +263,10 @@ public class HeadHunter extends JavaPlugin {
     
     public void reload() {
 		reloadConfig();
-		for(String name : Utils.AUX)
-			auxiliary.get(name).reloadConfig();
+		for(String name : Utils.AUX) {
+			if(!name.equals(Utils.MDB))
+				auxiliary.get(name).reloadConfig();
+		}
     }
 	
 	public Economy getEconomy() {
