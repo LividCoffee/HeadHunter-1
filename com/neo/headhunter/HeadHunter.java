@@ -155,7 +155,7 @@ public class HeadHunter extends JavaPlugin {
 					
 					//overwrite old config
 					saveResource(Utils.CFG, true);
-					config = YamlConfiguration.loadConfiguration(configFile);
+					config = getConfig();
 					for(String key : config.getKeys(true)) {
 						if(oldValues.containsKey(key))
 							config.set(key, oldValues.get(key));
