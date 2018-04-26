@@ -5,6 +5,7 @@ import com.neo.headhunter.util.Utils;
 import com.neo.headhunter.util.config.AuxResource;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Skeleton;
@@ -100,6 +101,23 @@ public final class MobLibrary {
 		if(className.startsWith("Craft"))
 			className = className.replaceFirst("Craft", "");
 		switch(className) {
+		case "Horse":
+			switch(((Horse) entity).getColor()) {
+			case BLACK:
+				return "HorseBlack";
+			case CHESTNUT:
+				return "HorseChestnut";
+			case CREAMY:
+				return "HorseCreamy";
+			case GRAY:
+				return "HorseGray";
+			case WHITE:
+				return "HorseWhite";
+			case DARK_BROWN:
+				return "HorseDarkBrown";
+			default:
+				return "HorseBrown";
+			}
 		case "MushroomCow":
 			return "Mooshroom";
 		case "Parrot":
@@ -124,12 +142,16 @@ public final class MobLibrary {
 			default:
 				return "Skeleton";
 			}
+		case "SkeletonHorse":
+			return "HorseSkeleton";
 		case "Snowman":
 			return "SnowGolem";
-		case "Wither":
-			return "WitherBoss";
 		case "VillagerZombie":
 			return "Zombie";
+		case "Wither":
+			return "WitherBoss";
+		case "ZombieHorse":
+			return "HorseZombie";
 		default:
 			return className;
 		}

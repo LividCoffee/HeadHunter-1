@@ -58,7 +58,7 @@ Donkey:
   meta:
     ==: ItemMeta
     meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2PwU6DQBRFnyYmSPwMtyTDwEBZdGEsbYcUkBaxw67AINAZbFqohe/yAyVx4/Lknrs4KoAKT7tjL8Tb+ausBVfgnhbwjDDGCJeF5hDT0kzTwVo2yywts60Zd4iN9ByroE6nEz93Nb88gtLxW9ef+UUFgDsFHpKD6Dn88MFD6b5Cxd4T+UCtieMdEiFtTjZtkyF7pRaV075+sTaD888l3eGDCGZ4VdpGfSYTtDG2gq+3ei7frwH26mBFh3DxScJ4KVJJTYbd72CMRiaThuFE+qM7BHFV++Py6I9C+k1Egj/3xkbR+HFVBQvXYNJF4YoR2upOGc3nUwH8Ar7AeVIcAQAA
+    internal: H4sIAAAAAAAAAE2QUY+iMACEu5dc4pH9GfdqUkBQH93FaIm0i4sgfaO1HC2tZxR3bX/9kn3a15n5MpPxAPDA83t/1/rt+r+VWkzAL3QCf9t2xkJfzKcsgs10BiM4XbJ4MY3D2F8sY39+arkHvBG6iOsgxe0PmAziMdyv4uYBAJ4m4HfZ6Lt4gsKmsKl8zcN9x44rSdTaz1QeZsk/S4p1lBWHGzq/WBbQC9uUKX1FMTK4w1U+w5vckWQd4iQPSFGOWmlw8qJxsFc4OXU4qCMkPyXfph/U6Bs9RB2rDpLIlDTVoLlZyN1rCumxg6djqrlF8bineIeaIHWZo3Np2Xff6G9X8c4uf2SjoakiXYdpR8/5nZkS7sK9Ftu9z83hI3PI1ibtsasftECz2vEHTTqZKeRTxS1WuaMFd7Ure1qsIC5KVaseYlVbbFCQOS3JhhrsdF+77EGqtWyP/nJ8D3wBrxZzG5gBAAA=
     skull-owner: Donkey
 ElderGuardian:
   ==: org.bukkit.inventory.ItemStack
@@ -114,15 +114,87 @@ Guardian:
     meta-type: SKULL
     internal: H4sIAAAAAAAAAE2Sya6jWBBEqVK39OqpPqN36MnM4EUtMAab6WIzc9VSi9lgJpvJ3G/qj2zXrnepUMZJpSI+MewT++nc56a5PPuiavIP7LuaYX8xBMGmcUp+xSQXfzFsHH/tc5764ouEJRmaZnmS/8Q+36Yhf05VPv7APqb8Nc3PfPzEMOzbB/bDqcou/q18/zeV3WmX1wjPbmbYe9b5YZrTedisst9qmVaNYq9NxdIt75m87CVp4Opd4L3YgBcfGbI6kloVXBIYvdtTknRKLsyYar3ouozbtXgkcvOrTA/yvVInOhcH5DWsXXiX3Zz0VHEecFmcy2vk1yGvHG6vm8miBpilmVtaz0sjCMa2Xq67u3SafW957kKtLKcXbh2d9BRqTKveCUUvp/SMP1cz1NxwDsvs5swyXEYKnhupuF3pKB4QGQBngXoydTYzP3zW11UOXQwWcOLcIs248IfgaEzGwGev1Ohavx1sMrxQ0YHA0WktN+O40w9SXkvyDQ9SJn+qorZnebdFO8maAhtppS4ywkYGFMpn4BNAhax5V/deQR9wWqHKByvZfaiwIRHWNwriplsNd6/VrD51iGJ1WjR0Q77x0mmNc6KPjcM4PSgR4PGrB8Mc2UPgCrEq7MnK0zXKIEf30fb3Y2zYV7/rYkBLFwRevU+ER6pUVE0LNVl45b7uO4o0cmYyjhfcEQTfmtEOTenTPsrCLgFrDo8RCraUdp4ZyvRZYcGqG3mbKWVtnQwB53c0qXsSrdAOvQR8kmkp93hOK+XorsLjybs4gbc5DXnuHgKlhNx8sawlVKNRL6Ak9Hgac4dlGnLOZ8LFE+CBd9Zo4PbbjaSBCrJphb2djWLUZuW+9Hi7NbJIFD2jLbwM8WvTyr8+sD/9uJnzb3/nm0bEAdmktH1LQrGyapkA6E5Y7p0ArrhZrjmq3WFLKDgkJ1+Dksqp9XU1j34dBeYrcmUqcq9kFMgsdNMNULACrkyYyCQBele9Wqv0rC2wbUbosbck8Cqr0oAjw8Km/Vva2kMUMJUhaSgOsjkKbTJtfQeGChmHWvP7XnbWSOisVXbymezsbzA0K6sbK4+YNLdSufcPb8/6m9tnZ3u1KmH53+6cBM0MA7BFASSMlm0yaU/A8EZkb76B7shszQ0cvQ2cTMZslcqkVARdj46QugJXq4FrIljLCJ6uTIQOFQxUJmrtu/mOGtRNFdUqCVz7HrklFSF5MzdtX4TELwz7wP4AcZtjP82z8s9pjp9ZFXcY9h/onvVOkwQAAA==
     skull-owner: Guardian
-Horse:
+HorseBlack:
   ==: org.bukkit.inventory.ItemStack
   type: SKULL_ITEM
   damage: 3
   meta:
     ==: ItemMeta
     meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2PwU6DQBRFnyYmSPwMtyTDwEBZdGEsbYcUkBaxw67AINAZbFqohe/yAyVx4/Lknrs4KoAKT7tjL8Tb+ausBVfgnhbwjDDGCJeF5hDT0kzTwVo2yywts60Zd4iN9ByroE6nEz93Nb88gtLxW9ef+UUFgDsFHpKD6Dn88MFD6b5Cxd4T+UCtieMdEiFtTjZtkyF7pRaV075+sTaD888l3eGDCGZ4VdpGfSYTtDG2gq+3ei7frwH26mBFh3DxScJ4KVJJTYbd72CMRiaThuFE+qM7BHFV++Py6I9C+k1Egj/3xkbR+HFVBQvXYNJF4YoR2upOGc3nUwH8Ar7AeVIcAQAA
-    skull-owner: Horse
+    internal: H4sIAAAAAAAAAE2QQU+DMACFq4nJJP4Mr0s6Chs7eFA7Wckogh2M3igUW9bOZWMq/nqJJ6/vfS/v5TkAOODubX8x5vX00WojJ+CaNODeb9t5LRtvihrZTL1g4U6rhRdMW7FEi1qIAAbCAc4YOspTr+X5Fkx6+d1fTvLsAACuJuAmr8xFXnlyiGBVzEyNMiV2jzrpVrO4S1GMy6+4e0cxI2dyeBqEy48izCP+TObEUkWL1KNh+pPgFaI4dROWj1puKX4y1M06ihtF3dIn+kvX6+iTW3PmW1+JYqsTHSVV0ZvaBnrzHEG+U7DZRaYeyHzcw96gSUh3XJBDPoi/vtFfP843w/If6/dV4ZsSRYof0ouwOdygzMh1Nqvt9pMyZXhBVWxXMP5JXR6+7Gm4Gjh+sZRle86ojZmyCU5hgmtUsq3Lu2bkM82L0uP4fYhZ6fOudGnIDWWNoTpatjv4MD4IfgE5515FnAEAAA==
+    skull-owner: HorseBlack
+HorseBrown:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE2QzW6jMBSF3ZFGStE8xmwjmd+ERRdtSYlRsAsxEHvHjzOY2pkoIWnh6cfqarb3fkfnu9cCwAK/9h83pd4vf49SiQX4gTrwexV0tfCC1bKr7Xrp+UdvGXauWIZhB+1166xgE1jAMqGzuIxSXB/BYhRf4+0irhYA4GEBfpa1uokHT0wJrCtbtW7eN4dnSYaNnQ6Zm0bMT2nq4ghd0ellahx+buIy4a8oQBr3uMo8HGcziTaGyRxCSzMrNY5eFHbyAUddjx3mI/kp221y51pdeeH3TVVIIhNSV6Nq9VruXhPIDz3sDolqJxQYH7qHiqDhvEKncmq++8x++xzspvA/1h/rylfMTXp+ym6NLuHOzZXY5narizunxt9BM47UwCrkkygxbhsfV7liM9c4LmxC2RfWWHH6MRP6NhBaQBIpSeIUpjNzGTX3xMjF9M/EdDqjkx0es6cn80HwD6N8KQicAQAA
+    skull-owner: HorseBrown
+HorseChestnut:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE1QyW7iMAA1I1Vion7GXJGyOYVDD5QUsEWcBrJg3xKTjG1sBkGYafL1tXqa61v0FgcABzwfzg+tP25/OqnbKfiBTuBX1PFmzsNwtog6bxaeXD6bRy/+DHZ1DWs+r2HoOcCxpmt762V7/wmmffvZP27t3QEATKbgqaz1o52E7YDduvI0D/aiOS5lqt69RGVBEvPPRCGYqOUdXd6GxmfXZlNitkIRMkSQKgvJJhvT+D0gceaneWmx0pD4TRN/r0h8EsSnEMl/km/xX2b0nRVQNFUhU4nTuuo1N3O5W2GXHYV7OmLNBxTZPvnB1SlS1xd0KYfmO8/y22W0Gxb/aWFfV1DTAAt2yR6NKd1dsNftdu9xU9g8oqlfBKRiJomJoCMK6bjW1JAzzQvb97dPVDEygxVR1CWbtbH6MalKQXMeJv7akFxItilgMp6HNLcbD3jRHd1X+yD4Av87rbycAQAA
+    skull-owner: HorseChestnut
+HorseCreamy:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE2QUU+DMBSFq4nJJP4MX5fQwnA8+DBFt5LRCjIYfYNSbFmZy8am8OutPvl0c+89J+fLsQCwwN377qz12/GzUVpMwDWuwb1dNYi7yJ9C34NTF3kP0zlqnGnZiDkX0K8ct7aAZUwHceyVON2CSS+++/NRnCwAwNUE3GSlPosrVwyhXeZQcyeR1XahaPsCozZ2ooAPNPgYzDzh/dNQIXaollnInrGHOyJJHrtkGY80eHFIECOaZuaWdSR40gQlLQlqSVAxw+pL8VV4YZ0+sc1MVvlGURXSMu817+Zq/RzabCvtehtqPmDP8KTvtqa4PTzgfTZUf3nmv1p468H/p531ZT7ThRNKto/PVZfZayfRYpVA3m0uLOAo6jJJl4VTjERG4842rG7RLsZilG2EMhUZZrPbJH9VJJW/GsjSZEfTWpMl64oUw2gsXGZ6YDlTeA/9Jn58NA2CH96e1uScAQAA
+    skull-owner: HorseCreamy
+HorseDarkBrown:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE2QQW+bMACF3UmTMrSfsWskYzCFww5NyRJbsRkpgeAbdtyCsbMoIW3h1w/ttOt739N7eh4AHvj+0t+t/X3989pZvQBfyAn8iCIdN0noLyPlJ8sQw3gZhyhYIpkEUsb4UYbYA94cuujr0OnbN7AY9Odwv+qbBwB4WICvZWPv+iHUI4VN5VsV7Ft5fOoys/aZyQOWviFWvIV8YjdyXo0SiYvclFQ8k4g43vIqD/kmn7J0HfA0R1lRzlrpeLqyHO0NT08tRzUm3UentvRdOHsTB9zK6tBlHc2aarDKxd3umUJxbOHpSK0aSTTvKV6gzYi5PJJzOcp/fbO/fYp2Y/Ifi4emwrYOaCvO+V26Eu6CvdXbva/c4Z0XwvCp7YURpp76gFVkzAoFs4r5vKA9d2vICvbBkDDMHXBdKFSjX044gtlE/HrKMTcnx8yqZ5uZT9XERpq8HuHP+UHwFyKgKPicAQAA
+    skull-owner: HorseDarkBrown
+HorseGray:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE2QQY+bMBSEvZUqpag/o9dIBgeSHHrILimxFexCCMS+YTDBjkmjhOwu/PqinnobzZvR+zQOAA74frg8rf19/9Noq2bgC67BD7RaShUEzdyVyp0vYO3OS9mgOarlKkDVslwHjQOcqXRT916rxzcw69Vn/7yrhwMAeJmBr3lpn+ploQYCy8K1FUpbedpoZrZubBIUh2efjtyf9ANfXwfpiZuMciLecIA72tIiWdAoGVm4RTRMPJblk5d3NHy11EsNDeuWetzH+kNXO/IuOvsQR7+VxVEzTVhZ9LbqVnr/RqA4tbA+EVsNOJh4sgO0DJvbEl/zQf77N913m2A/rP/L+n1Z+JYj0opr8pRdDvcotWqXulV3fKcRMdzbIpGdBz7+6kSEEcviBYuSz4lTs6w2sUlbkdkLHc+QhcnAs9bGXW5YQSb+DeQj0bxILzSMXZHlhh/IujnBn9OC4C/m7pQ5nAEAAA==
+    skull-owner: HorseGray
+HorseSkeleton:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE2O0U6DMBhGf01MkPgY3pIUGCgXuzAu2UpWdAzY2rtRCqy0uDBYBk/lI8qll1/OOclnApjwsm8Gpb67n/KshAGPuIDXnOdceHlpvft8YS2E71hByT0LcR6gQgSL3C9MMOfoIrr+LK7PYPTi3g+duJoA8GDAU3ZSg4BfMYaIHWtUHEPFR+zPO9kj9YXl5Q232Zh/Yh/rmW8+/O0Y/HO9/nTwFHXDmrW7IdcZ2rqxEpvY5jq9RatCMc0kS4hNEjLSqXKYpi7RoaSH1I2cWFON72yFxyipXJY0iK3pRJ1QEpm6ZJ01JCkkk5UXTVGNWzsod8vl/B7+AP4g3FEYAQAA
+    skull-owner: SkeletonHorse
+HorseWhite:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE1QS2+CMADulixxZD9jVxNowcdhBxWCJVJWp632xqOO1tYZxTn49SM77fo98j0cABzw8nG8GfN++TooIwfgEVfgVaKDC2GAhtX4UA19KPNhHozR0C8mk2rsTaeBLB3g9KazvDRKXp/BoJE/ze0irw4A4GEAnlhubvLBl23i5twzJVrXxW6mMh15qaaIdKVHNtE97Y5XfJq3BRTnImaJWOARtqQmnPokpl0WRoiEFGYb1mPMknBuCFxrElY1gfsAq7sql8m3sOYqtkFd8K3KVJLlvDGlnajVInHFrnarXWLKFo/6PpsP12RYn8f4xNriL6/nl7PRqp3+0wZNzgOzR0ktTvRWWOau0NrI5dor7fabhNhPbdRv6HtqCklYemlHTKpnreDsmIXHLo3pnVimU459wqNuryvT++4i/EQk3kMRMyV0YsUGuymnHj550wN9e+sfBL8bSt/3nAEAAA==
+    skull-owner: HorseWhite
+HorseZombie:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    internal: H4sIAAAAAAAAAE1QSW6DMAB0K1VKUZ/RayTHrDn00IY0AcV2oSwxNzCOMDFplJAFXl+rp55GmkUzGgMAA7x87y9KfZ1+dlKJCXgMavDqOo7l7up6WvLKmVpu6U49z+NT20FWzZFrivnOAIYOHcWpl+L8DCa9uPeXkzgbAICHCXjKSnURD1AMISzzmeJm3FTbd0nb5Qy3kUlGbmuEuN2fg8PHUKHiWK2ysFgETtCRhuSRRVbRSP2lSfwI0STTXNYR/0MRFLfErxuCmB3Im+Tr8Fp06lykdlPlqaQypGXeK955crMIYbFtYL0NFR8CR+9JvqGiQXt0g0M2VH99Wl+/O5th/s9r92VuK2aGTXGILlWXwY0ZK7GOZ7xLr7q/Y2OtaJIObFxCmnC9lSHi8zvJUwvnscSoaNjIEUOfkqDPPUbYYkl6Yy2zSbK80RXWX2ALj6ohi3C+28I3/R74BWgD9d6YAQAA
+    skull-owner: HorseZombie
 Husk:
   ==: org.bukkit.inventory.ItemStack
   type: SKULL_ITEM
@@ -184,7 +256,7 @@ Mule:
   meta:
     ==: ItemMeta
     meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2PwU6DQBRFnyYmSPwMtyTDwEBZdGEsbYcUkBaxw67AINAZbFqohe/yAyVx4/Lknrs4KoAKT7tjL8Tb+ausBVfgnhbwjDDGCJeF5hDT0kzTwVo2yywts60Zd4iN9ByroE6nEz93Nb88gtLxW9ef+UUFgDsFHpKD6Dn88MFD6b5Cxd4T+UCtieMdEiFtTjZtkyF7pRaV075+sTaD888l3eGDCGZ4VdpGfSYTtDG2gq+3ei7frwH26mBFh3DxScJ4KVJJTYbd72CMRiaThuFE+qM7BHFV++Py6I9C+k1Egj/3xkbR+HFVBQvXYNJF4YoR2upOGc3nUwH8Ar7AeVIcAQAA
+    internal: H4sIAAAAAAAAAE2QQW+bMACF3UmTMrSfsWskYzCFww5NyRJbsRkpgeAbdtyCsbMoIW3h1w/ttOt739N7eh4AHvj+0t+t/X3989pZvQBfyAn8iCIdN0noLyPlJ8sQw3gZhyhYIpkEUsb4UYbYA94cuujr0OnbN7AY9Odwv+qbBwB4WICvZWPv+iHUI4VN5VsV7Ft5fOoys/aZyQOWviFWvIV8YjdyXo0SiYvclFQ8k4g43vIqD/kmn7J0HfA0R1lRzlrpeLqyHO0NT08tRzUm3UentvRdOHsTB9zK6tBlHc2aarDKxd3umUJxbOHpSK0aSTTvKV6gzYi5PJJzOcp/fbO/fYp2Y/Ifi4emwrYOaCvO+V26Eu6CvdXbva/c4Z0XwvCp7YURpp76gFVkzAoFs4r5vKA9d2vICvbBkDDMHXBdKFSjX044gtlE/HrKMTcnx8yqZ5uZT9XERpq8HuHP+UHwFyKgKPicAQAA
     skull-owner: Mule
 Ocelot:
   ==: org.bukkit.inventory.ItemStack
@@ -301,15 +373,6 @@ Skeleton:
     ==: ItemMeta
     meta-type: SKULL
     skull-owner: Skeleton
-SkeletonHorse:
-  ==: org.bukkit.inventory.ItemStack
-  type: SKULL_ITEM
-  damage: 3
-  meta:
-    ==: ItemMeta
-    meta-type: SKULL
-    internal: H4sIAAAAAAAAAE2O0U6DMBhGf01MkPgY3pIUGCgXuzAu2UpWdAzY2rtRCqy0uDBYBk/lI8qll1/OOclnApjwsm8Gpb67n/KshAGPuIDXnOdceHlpvft8YS2E71hByT0LcR6gQgSL3C9MMOfoIrr+LK7PYPTi3g+duJoA8GDAU3ZSg4BfMYaIHWtUHEPFR+zPO9kj9YXl5Q232Zh/Yh/rmW8+/O0Y/HO9/nTwFHXDmrW7IdcZ2rqxEpvY5jq9RatCMc0kS4hNEjLSqXKYpi7RoaSH1I2cWFON72yFxyipXJY0iK3pRJ1QEpm6ZJ01JCkkk5UXTVGNWzsod8vl/B7+AP4g3FEYAQAA
-    skull-owner: SkeletonHorse
 Slime:
   ==: org.bukkit.inventory.ItemStack
   type: SKULL_ITEM
