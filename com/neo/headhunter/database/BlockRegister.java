@@ -60,42 +60,18 @@ public final class BlockRegister {
 	}
 	
 	public boolean isHead(Location loc) {
-		try {
-			PreparedStatement s = c.prepareStatement("select type from block where location = ?");
-			s.setString(1, Utils.parseLocation(loc));
-			ResultSet rs = s.executeQuery();
-			if(rs.next())
-				return rs.getString(1).equalsIgnoreCase(BlockType.HEAD.toString());
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+		Triplet<Location, OfflinePlayer, BlockType> block = getBlock(loc);
+		return block != null && block.getV() == BlockType.HEAD;
 	}
 	
 	public boolean isSellingSign(Location loc) {
-		try {
-			PreparedStatement s = c.prepareStatement("select type from block where location = ?");
-			s.setString(1, Utils.parseLocation(loc));
-			ResultSet rs = s.executeQuery();
-			if(rs.next())
-				return rs.getString(1).equalsIgnoreCase(BlockType.SELLING_SIGN.toString());
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+		Triplet<Location, OfflinePlayer, BlockType> block = getBlock(loc);
+		return block != null && block.getV() == BlockType.SELLING_SIGN;
 	}
 	
 	public boolean isWantedSign(Location loc) {
-		try {
-			PreparedStatement s = c.prepareStatement("select type from block where location = ?");
-			s.setString(1, Utils.parseLocation(loc));
-			ResultSet rs = s.executeQuery();
-			if(rs.next())
-				return rs.getString(1).equalsIgnoreCase(BlockType.WANTED_SIGN.toString());
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+		Triplet<Location, OfflinePlayer, BlockType> block = getBlock(loc);
+		return block != null && block.getV() == BlockType.WANTED_SIGN;
 	}
 	
 	private void createTables() {
