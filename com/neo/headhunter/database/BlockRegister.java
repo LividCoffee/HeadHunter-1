@@ -39,7 +39,8 @@ public final class BlockRegister {
 			ResultSet rs = getBlock.executeQuery();
 			if(rs.next()) {
 				Location block = Utils.readLocation(rs.getString(1));
-				OfflinePlayer placer = PlayerUtils.getPlayer(UUID.fromString(rs.getString(2)));
+				String uuidString = rs.getString(2);
+				OfflinePlayer placer = uuidString == null ? null : PlayerUtils.getPlayer(UUID.fromString(uuidString));
 				BlockType type = BlockType.valueOf(rs.getString(3));
 				return new Triplet<>(block, placer, type);
 			}
