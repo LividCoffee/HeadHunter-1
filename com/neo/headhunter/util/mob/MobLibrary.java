@@ -66,13 +66,8 @@ public final class MobLibrary {
 	    if(head == null || head.getType() != Material.SKULL_ITEM)
 		    throw new IllegalArgumentException("head must be of Material SKULL_ITEM");
 	    SkullMeta meta = (SkullMeta) head.getItemMeta();
-	    if(meta.hasOwner()) {
-	    	String owner = meta.getOwner();
-	    	for(String tag : plugin.getAuxiliary(Utils.MDB).getConfig().getKeys(false)) {
-	    		if(tag.equals(owner))
-	    			return true;
-		    }
-	    }
+	    if(meta.hasOwner())
+	    	return plugin.getAuxiliary(Utils.MDB).getConfig().getKeys(false).contains(meta.getOwner());
     	return false;
     }
 
