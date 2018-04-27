@@ -169,11 +169,18 @@ public final class MobLibrary {
 	    PROPER_NAMES.put("ParrotGreen", "Parrot");
 	    PROPER_NAMES.put("ParrotRed", "Parrot");
         PROPER_NAMES.put("PolarBear", "Polar Bear");
-	    PROPER_NAMES.put("SkeletonHorse", "Skeleton Horse");
         PROPER_NAMES.put("SnowGolem", "Snow Golem");
         PROPER_NAMES.put("WitherBoss", "Wither");
         PROPER_NAMES.put("WitherSkeleton", "Wither Skeleton");
-	    PROPER_NAMES.put("ZombieHorse", "Zombie Horse");
+	    PROPER_NAMES.put("HorseBlack", "Horse");
+	    PROPER_NAMES.put("HorseChesnut", "Horse");
+	    PROPER_NAMES.put("HorseCreamy", "Horse");
+	    PROPER_NAMES.put("HorseGray", "Horse");
+	    PROPER_NAMES.put("HorseWhite", "Horse");
+	    PROPER_NAMES.put("HorseDarkBrown", "Horse");
+	    PROPER_NAMES.put("HorseBrown", "Horse");
+	    PROPER_NAMES.put("HorseSkeleton", "Skeleton Horse");
+	    PROPER_NAMES.put("HorseZombie", "Zombie Horse");
         PROPER_NAMES.put("ZombiePigman", "Zombie Pigman");
     }
 }
