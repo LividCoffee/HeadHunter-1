@@ -275,7 +275,7 @@ public class HeadHunter extends JavaPlugin {
 				new ListenerHelper(this),
 				new ListenerDeath(this),
 				new ListenerSign(this),
-				new ListenerEntity(this)
+				new ListenerEntity()
 		};
 		for(Listener l : toRegister)
 			Bukkit.getPluginManager().registerEvents(l, this);
